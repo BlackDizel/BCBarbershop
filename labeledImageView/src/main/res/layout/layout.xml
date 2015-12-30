@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tvHugeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:maxLines="@integer/title_huge_max_lines"
+        android:padding="@dimen/paddingNormal"
+        android:text="some text with more text with longwordfortestwrapping"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/title_huge_textsize" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/TextPanel"
+        android:orientation="vertical"
+        android:padding="@dimen/paddingNormal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvPrimary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:lines="@integer/title_max_lines"
+                android:text="some text with more text with longwordfortestwrapping"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/title_textsize" />
+
+            <TextView
+                android:id="@+id/tvEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:lines="@integer/title_max_lines"
+                android:paddingLeft="@dimen/text_date_padding"
+                android:text="21 AUG"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/title_textsize" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="some more description"
+            android:textColor="@android:color/darker_gray"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
