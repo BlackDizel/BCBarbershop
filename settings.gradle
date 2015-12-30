@@ -1,0 +1,4 @@
+include ':azureLib'
+include ':labeledImageView'
+include ':yandexmapkitlibrary'
+include ':application'
