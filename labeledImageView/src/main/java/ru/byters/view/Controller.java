@@ -28,6 +28,7 @@ public class Controller {
         tDate = (TextView) viewGroup.findViewById(R.id.tvEnd);
         tDescription = (TextView) viewGroup.findViewById(R.id.tvSecondary);
         tHuge = (TextView) viewGroup.findViewById(R.id.tvHugeTitle);
+        tPrimary = (TextView) viewGroup.findViewById(R.id.tvPrimary);
 
         imgView = (ImageView) viewGroup.findViewById(R.id.imgView);
 
