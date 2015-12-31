@@ -58,5 +58,4 @@ Thumbs.db
 .idea
 
 /yandexmapkitlibrary
-/application/src/main/res/values/yandexmapkey.xml
-/azureLib/src/main/java/ru/byters/azure/AzureCredentials.java
+/application/src/main/res/values/keys.xml
