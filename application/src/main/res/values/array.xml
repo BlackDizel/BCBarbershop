@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="main_menu_colors">
+        <!-- http://www.google.com/design/spec/style/color.html#color-color-palette -->
+        <item>#f44336</item>
+        <item>#e91e63</item>
+        <item>#9c27b0</item>
+        <item>#2196f3</item>
+        <item>#009688</item>
+        <item>#ff9800</item>
+    </array>
+
+    <string-array name="main_menu">
+        <item>коррекция фигуры</item>
+        <item>массаж</item>
+        <item>косметология</item>
+        <item>эпиляция</item>
+        <item>ногтевой сервис</item>
+        <item>парикмахерский зал</item>
+    </string-array>
+
+</resources>

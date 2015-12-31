@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ru.byters.bcbarbershop.ui.activities.ActivityMain">
+
+    <item
+        android:id="@+id/action_filter"
+        android:title="@string/action_filter"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_filter_all"
+                android:title="@string/action_all" />
+
+            <item
+                android:id="@+id/action_filter_promo"
+                android:title="@string/action_promo" />
+
+            <item
+                android:id="@+id/action_filter_info"
+                android:title="@string/action_info" />
+
+            <item
+                android:id="@+id/action_filter_community"
+                android:title="@string/action_community" />
+        </menu>
+    </item>
+</menu>
