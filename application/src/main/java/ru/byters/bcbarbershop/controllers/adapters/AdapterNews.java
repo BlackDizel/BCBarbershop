@@ -1,5 +1,6 @@
 package ru.byters.bcbarbershop.controllers.adapters;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,20 +18,23 @@ import ru.byters.view.LabeledImageView;
 
 public class AdapterNews
         extends RecyclerView.Adapter<AdapterNews.ViewHolder>
-        implements Filterable {
+        implements Filterable, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String INTENT_EXTRA_KEY = "id";
 
     Controller controller;
     View vData, vError;
+    SwipeRefreshLayout refreshLayout;
 
     public AdapterNews(Controller controller) {
         this.controller = controller;
     }
 
-    public void setViews(View vData, View vError) {
+    public void setViews(View vData, View vError, SwipeRefreshLayout refreshLayout) {
         this.vData = vData;
         this.vError = vError;
+        this.refreshLayout = refreshLayout;
+        refreshLayout.setOnRefreshListener(this);
     }
 
     @Override
@@ -48,13 +52,13 @@ public class AdapterNews
         return new ViewHolder(new LabeledImageView(parent.getContext()));
     }
 
-
     public void setStateData(boolean isDataExist) {
+        if (vData == null || vError == null) return;
         if (isDataExist) {
             vData.setVisibility(View.VISIBLE);
-            vError.setVisibility(View.GONE);
+            vError.setVisibility(View.INVISIBLE);
         } else {
-            vData.setVisibility(View.GONE);
+            vData.setVisibility(View.INVISIBLE);
             vError.setVisibility(View.VISIBLE);
         }
     }
@@ -85,6 +89,11 @@ public class AdapterNews
                 notifyDataSetChanged();
             }
         };
+    }
+
+    @Override
+    public void onRefresh() {
+        //todo implement
     }
 
     //region holder

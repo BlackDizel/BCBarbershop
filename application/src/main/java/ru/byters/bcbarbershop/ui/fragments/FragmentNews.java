@@ -2,6 +2,7 @@ package ru.byters.bcbarbershop.ui.fragments;
 
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,7 +29,9 @@ public class FragmentNews extends FragmentBase implements OnClickListener {
         rvNews.setHasFixedSize(true);
         rvNews.setLayoutManager(new LinearLayoutManager(container.getContext()));
         AdapterNews adapter = ((Controller) container.getContext().getApplicationContext()).adapterNews;
-        adapter.setViews(rvNews, view.findViewById(R.id.tvNoData));
+        adapter.setViews(rvNews
+                , view.findViewById(R.id.tvNoData)
+                , (SwipeRefreshLayout)view.findViewById(R.id.srlNews));
         rvNews.setAdapter(adapter);
         rvNews.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
