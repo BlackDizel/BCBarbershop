@@ -1,5 +1,6 @@
 package ru.byters.bcbarbershop.controllers.adapters;
 
+import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -13,14 +14,13 @@ import java.util.Calendar;
 
 import ru.byters.bcbarbershop.controllers.Controller;
 import ru.byters.bcbarbershop.dataclasses.News;
+import ru.byters.bcbarbershop.ui.activities.ActivityNewsDetails;
 import ru.byters.view.LabeledImageView;
 
 
 public class AdapterNews
         extends RecyclerView.Adapter<AdapterNews.ViewHolder>
         implements Filterable, SwipeRefreshLayout.OnRefreshListener {
-
-    public static final String INTENT_EXTRA_KEY = "id";
 
     Controller controller;
     View vData, vError;
@@ -107,6 +107,7 @@ public class AdapterNews
             implements OnClickListener {
 
         private LabeledImageView view;
+        private int id;
 
         public ViewHolder(View v) {
             super(v);
@@ -125,16 +126,14 @@ public class AdapterNews
                 view.setData(null, item.Title, item.Description, c);
             }
 
-            view.setTag(item.NewsID);
+            id = item.NewsID;
         }
 
         @Override
         public void onClick(View v) {
-            //todo implement
-            /*int id = (Integer) v.getTag();
-            Intent i = new Intent(v.getContext(), ActivityNews.class);
-            i.putExtra(INTENT_EXTRA_KEY, id);
-            v.getContext().startActivity(i);*/
+            Intent i = new Intent(v.getContext(), ActivityNewsDetails.class);
+            i.putExtra(ActivityNewsDetails.INTENT_EXTRA_KEY, id);
+            v.getContext().startActivity(i);
         }
     }
     //endregion
