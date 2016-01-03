@@ -1,8 +1,11 @@
 package ru.byters.bcbarbershop.dataclasses;
 
+import android.support.annotation.NonNull;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class News implements Comparable<News> {
+public class News implements Comparable<News>, Serializable {
     public int NewsID;
     public String Title;
     public String Description;
@@ -13,7 +16,7 @@ public class News implements Comparable<News> {
     private int id;
 
     @Override
-    public int compareTo(News another) {
+    public int compareTo(@NonNull News another) {
         return this.NewsDate.compareTo(another.NewsDate);
     }
 }
