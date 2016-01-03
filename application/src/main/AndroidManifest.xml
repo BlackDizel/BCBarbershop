@@ -25,21 +25,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity
-            android:name=".ui.activities.ActivityShop"
-            android:label="@string/title_activity_activity_shop" />
         <activity
-            android:name=".ui.activities.ActivityEnroll"
-            android:label="@string/title_activity_activity_enroll" />
-        <activity
-            android:name=".ui.activities.ActivityDateTime"
-            android:label="@string/title_activity_activity_date_time" />
-        <activity
-            android:name=".ui.activities.ActivityMaestro"
-            android:label="@string/title_activity_activity_maestro" />
-        <activity
-            android:name=".ui.activities.ActivityNews"
-            android:label="@string/title_activity_activity_news" />-->
+            android:name=".ui.activities.ActivityNewsDetails"
+            android:label="@string/title_activity_news_details" />
+        <!--        <activity
+                    android:name=".ui.activities.ActivityShop"
+                    android:label="@string/title_activity_activity_shop" />
+                <activity
+                    android:name=".ui.activities.ActivityEnroll"
+                    android:label="@string/title_activity_activity_enroll" />
+                <activity
+                    android:name=".ui.activities.ActivityDateTime"
+                    android:label="@string/title_activity_activity_date_time" />
+                <activity
+                    android:name=".ui.activities.ActivityMaestro"
+                    android:label="@string/title_activity_activity_maestro" />
+                -->
     </application>
 
 </manifest>
