@@ -2,8 +2,6 @@ package ru.byters.bcbarbershop.controllers;
 
 import android.app.Application;
 import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -23,16 +21,15 @@ import ru.byters.bcbarbershop.models.ModelMaestro;
 import ru.byters.bcbarbershop.models.ModelNews;
 import ru.byters.bcbarbershop.models.ModelProducts;
 import ru.byters.bcbarbershop.models.ModelProductsMaestro;
-import ru.byters.bcbarbershop.ui.fragments.FragmentDates;
 import ru.byters.view.LabeledImageView;
 
 public class Controller extends Application implements AzureThrowListener {
     //public ModelProducts products;
     //public ModelMaestro maestro;
     // public ModelEnroll enroll;
-    public ModelNews news;
     // public AdapterProducts adapterProducts;
     // public AdapterMaestro adapterMaestro;
+    public ControllerNews controllerNews;
     public AdapterBarbershopInfo barbershop;
     public AdapterNews adapterNews;
     //  ModelProductsMaestro productmaestro;
@@ -68,8 +65,9 @@ public class Controller extends Application implements AzureThrowListener {
         // azure.getTableTop(ModelProducts.tablename, Product.class, 500);
         // azure.getTableTop(ModelMaestro.tablename, Maestro.class, 500);
         //  azure.getTableTop(ModelProductsMaestro.tablename, ProductMaestro.class, 500);
-        azure.getTableTop(ModelNews.tablename, News.class, 500);
-          azure.getTableTop(barbershop.model.tablename, Barbershop.class, 500);
+
+        controllerNews = new ControllerNews(this, azure);
+        azure.getTableTop(barbershop.model.tablename, Barbershop.class, 500);
 
         //enroll = new ModelEnroll();
     }
@@ -80,26 +78,11 @@ public class Controller extends Application implements AzureThrowListener {
 
     }
 
-/*    public void sendEnroll() {
-        azure.postTable("Enroll", enroll.getEnroll());
-    }*/
-/*
-    public Fragment InitFragmentDates() {
-        int monthnum = 3;
-        Bundle[] arrb = new Bundle[monthnum];
-        for (int i = 0; i < arrb.length; ++i) {
-            Bundle b = new Bundle();
-            b.putInt(FragmentDates.KEY, i);
-            arrb[i] = b;
-        }
-        return //new ModelSimpleString(Calendar.getInstance().getTime(),monthnum,ModelSimpleString.Type.Months).getData(),
-                //arrb,
-                new FragmentDates();
-    }*/
-
     @Override
     public <T> void OnDownloadCompleted(String tablename, List<T> result, Boolean error) {
-        if (!error) {
+        if (error)
+            result = null;
+
             /*if (tablename.equals(ModelProducts.tablename)) {
                 products = new ModelProducts((ArrayList<Product>) result);
                 adapterProducts.updateModel(this);
@@ -111,18 +94,15 @@ public class Controller extends Application implements AzureThrowListener {
                 adapterMaestro.updateModel(this);
                 adapterMaestro.notifyDataSetChanged();
             } else*/
-            if (tablename.equals(ModelNews.tablename)) {
-                news = new ModelNews((ArrayList<News>) result);
-                news.Sort();
-                news.Reverse();
-                news.setFilteredList();
-                adapterNews.notifyDataSetChanged();
-            } else if (tablename.equals(barbershop.model.tablename)) {
-                ArrayList<Barbershop> l = (ArrayList<Barbershop>) result;
-                barbershop.model.setData(l.get(0));
-                barbershop.updateData();
-            }
+        if (tablename.equals(ModelNews.tablename)) {
+            controllerNews.setData(this, (ArrayList<News>) result);
+            adapterNews.setDataUpdated();
+        } else if (tablename.equals(barbershop.model.tablename) && result != null) {
+            ArrayList<Barbershop> l = (ArrayList<Barbershop>) result;
+            barbershop.model.setData(l.get(0));
+            barbershop.updateData();
         }
+
     }
 
     @Override
@@ -130,8 +110,28 @@ public class Controller extends Application implements AzureThrowListener {
 
     }
 
+    public void updateNews() {
+        controllerNews.updateNews(azure);
+    }
 
-    /*public void updateEnrollView(LabeledImageView v) {
+/*    public void sendEnroll() {
+        azure.postTable("Enroll", enroll.getEnroll());
+    }
+
+    public Fragment InitFragmentDates() {
+        int monthnum = 3;
+        Bundle[] arrb = new Bundle[monthnum];
+        for (int i = 0; i < arrb.length; ++i) {
+            Bundle b = new Bundle();
+            b.putInt(FragmentDates.KEY, i);
+            arrb[i] = b;
+        }
+        return //new ModelSimpleString(Calendar.getInstance().getTime(),monthnum,ModelSimpleString.Type.Months).getData(),
+                //arrb,
+                new FragmentDates();
+    }
+
+    public void updateEnrollView(LabeledImageView v) {
         Maestro m = null;
         if (enroll != null)
             if (maestro != null)

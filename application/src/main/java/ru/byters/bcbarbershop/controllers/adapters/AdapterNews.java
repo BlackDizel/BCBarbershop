@@ -39,7 +39,7 @@ public class AdapterNews
 
     @Override
     public int getItemCount() {
-        return controller.news == null ? 0 : controller.news.getSize();
+        return controller.controllerNews.getNews().getSize();
     }
 
     @Override
@@ -50,6 +50,11 @@ public class AdapterNews
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(new LabeledImageView(parent.getContext()));
+    }
+
+    public void setDataUpdated() {
+        if (refreshLayout != null) refreshLayout.setRefreshing(false);
+        notifyDataSetChanged();
     }
 
     public void setStateData(boolean isDataExist) {
@@ -72,20 +77,20 @@ public class AdapterNews
                 FilterResults results = new FilterResults();
 
                 if (TextUtils.isEmpty(constraint)) {
-                    controller.news.resetData();
+                    controller.controllerNews.getNews().resetData();
                 } else {
-                    controller.news.mode = Integer.valueOf((String) constraint);
-                    controller.news.setFilteredList();
+                    controller.controllerNews.getNews().mode = Integer.valueOf((String) constraint);
+                    controller.controllerNews.getNews().setFilteredList();
                 }
 
-                results.count = controller.news.Data.size();
-                results.values = controller.news.Data;
+                results.count = controller.controllerNews.getNews().getSize();
+                results.values = controller.controllerNews.getNews().getData();
                 return results;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                setStateData(controller.news.Data != null);
+                setStateData(controller.controllerNews.getNews().getData() != null);
                 notifyDataSetChanged();
             }
         };
@@ -93,7 +98,7 @@ public class AdapterNews
 
     @Override
     public void onRefresh() {
-        //todo implement
+        controller.updateNews();
     }
 
     //region holder
@@ -110,7 +115,7 @@ public class AdapterNews
         }
 
         public void setData(int position) {
-            News item = controller.news.getItem(position);
+            News item = controller.controllerNews.getNews().getItem(position);
 
             if (!TextUtils.isEmpty(item.PhotoURI))
                 ((Controller) view.getContext().getApplicationContext()).setImage(view, item);
