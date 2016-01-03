@@ -55,7 +55,9 @@ public class ModelNews {
     }
 
     public News getItemById(int id) {
-        for (News m : Data)
+        if (data == null) return null;
+
+        for (News m : data)
             if (m.NewsID == id)
                 return m;
         return null;
