@@ -12,6 +12,7 @@ public class News implements Comparable<News>, Serializable {
     public Date NewsDate;
     public int NewsType;
     public String PhotoURI;
+    public int id;
 
     @Override
     public int compareTo(@NonNull News another) {
