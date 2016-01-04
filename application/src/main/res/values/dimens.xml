@@ -10,6 +10,7 @@
     <dimen name="item_news_margin">16dp</dimen>
     <dimen name="item_menu_margin">16dp</dimen>
     <dimen name="about_text_padding">16dp</dimen>
+    <dimen name="text_news_title">24sp</dimen>
 
 
 </resources>
