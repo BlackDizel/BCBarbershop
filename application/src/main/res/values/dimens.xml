@@ -8,9 +8,11 @@
     <dimen name="margin_thin">6dp</dimen>
 
     <dimen name="item_news_margin">16dp</dimen>
-    <dimen name="item_menu_margin">16dp</dimen>
+    <dimen name="item_menu_margin">4dp</dimen>
     <dimen name="about_text_padding">16dp</dimen>
     <dimen name="text_news_title">24sp</dimen>
+    <dimen name="item_menu_padding_horizontal">8dp</dimen>
+    <dimen name="item_menu_padding_vertical">12dp</dimen>
 
 
 </resources>
