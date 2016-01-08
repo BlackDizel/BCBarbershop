@@ -5,11 +5,11 @@
     android:versionName="1.0">
 
     <uses-permission android:name="android.permission.INTERNET" />
-<!--
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
+    <!--
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
 
     <application
         android:name=".controllers.Controller"
@@ -28,10 +28,10 @@
         <activity
             android:name=".ui.activities.ActivityNewsDetails"
             android:label="@string/title_activity_news_details" />
+        <activity
+            android:name=".ui.activities.ActivityShop"
+            android:label="@string/title_activity_activity_shop" />
         <!--        <activity
-                    android:name=".ui.activities.ActivityShop"
-                    android:label="@string/title_activity_activity_shop" />
-                <activity
                     android:name=".ui.activities.ActivityEnroll"
                     android:label="@string/title_activity_activity_enroll" />
                 <activity
