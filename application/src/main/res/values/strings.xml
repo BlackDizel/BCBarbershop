@@ -6,7 +6,7 @@
     <string name="title_section2">Меню</string>
     <string name="title_section3">О салоне красоты</string>
     <string name="action_settings">Настройки</string>
-    <string name="title_activity_activity_shop">ActivityShop</string>
+    <string name="title_activity_activity_shop">Услуги</string>
     <string name="btEnroll">Записаться</string>
     <string name="title_activity_activity_enroll">Запись</string>
     <string name="tomorrow">завтра</string>
