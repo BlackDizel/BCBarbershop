@@ -26,7 +26,7 @@ public class FragmentAbout extends FragmentBase {
                 container, false);
 
         Controller controllerMain = ((Controller) rootView.getContext().getApplicationContext());
-        controllerMain.barbershop.setUI(rootView);
+        controllerMain.controllerBarbershopInfo.setUI(rootView);
 
         mapView = (MapView) rootView.findViewById(R.id.map);
         setMap(controllerMain);
@@ -35,7 +35,7 @@ public class FragmentAbout extends FragmentBase {
     }
 
     void setMap(Controller controllerMain) {
-        OverlayItem item = controllerMain.barbershop.getMapPin(controllerMain);
+        OverlayItem item = controllerMain.controllerBarbershopInfo.getMapPin(controllerMain);
         if (item != null) {
             MapController mMapController = mapView.getMapController();
             OverlayManager mOverlayManager = mMapController.getOverlayManager();
