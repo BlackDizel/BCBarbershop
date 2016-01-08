@@ -1,5 +1,6 @@
 package ru.byters.bcbarbershop.controllers.adapters;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import ru.byters.bcbarbershop.R;
 import ru.byters.bcbarbershop.controllers.Controller;
 import ru.byters.bcbarbershop.dataclasses.Category;
+import ru.byters.bcbarbershop.ui.activities.ActivityShop;
 
 
 public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.ViewHolder> {
@@ -39,25 +41,26 @@ public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
         private TextView tvItem;
+        private int categoryID;
 
         public ViewHolder(View v) {
             super(v);
             tvItem = (TextView) v.findViewById(R.id.tvData);
-            tvItem.setOnClickListener(this);
+            v.setOnClickListener(this);
         }
 
         public void setData(int position) {
             Category item = controller.categories.getItem(position);
             tvItem.setText(item.getTitle().toUpperCase());
             tvItem.setBackgroundColor(colors[position % colors.length]);
+            categoryID = item.getCategoryID();
         }
 
         @Override
         public void onClick(View v) {
-            //todo implement
-            //Intent i = new Intent(context, ActivityShop.class);
-            //i.putExtra(TAG, ((TextView)v).getText());
-            //context.startActivity(i);
+            Intent i = new Intent(v.getContext(), ActivityShop.class);
+            i.putExtra(ActivityShop.INTENT_EXTRA_ID, categoryID);
+            v.getContext().startActivity(i);
         }
     }
 }
