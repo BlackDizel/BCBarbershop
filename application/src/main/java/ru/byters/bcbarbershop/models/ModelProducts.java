@@ -24,12 +24,6 @@ public class ModelProducts {
         return data;
     }
 
-    public int getSize() {
-        if (data != null)
-            return data.size();
-        return 0;
-    }
-
     public ArrayList<Product> getDataWithID(int id) {
         if (savedID == id && savedData != null)
             return savedData;
@@ -43,12 +37,6 @@ public class ModelProducts {
                 savedData.add(p);
 
         return savedData;
-    }
-
-    public Product getItem(int pos) {
-        if ((pos < data.size()) && (pos >= 0))
-            return data.get(pos);
-        return null;
     }
 
     public void setData(@NonNull Context context, @NonNull ArrayList<Product> result) {
