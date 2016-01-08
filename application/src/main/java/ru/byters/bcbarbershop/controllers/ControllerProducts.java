@@ -6,9 +6,7 @@ import android.support.annotation.NonNull;
 import java.util.ArrayList;
 
 import ru.byters.azure.AzureConnect;
-import ru.byters.bcbarbershop.dataclasses.News;
 import ru.byters.bcbarbershop.dataclasses.Product;
-import ru.byters.bcbarbershop.models.ModelNews;
 import ru.byters.bcbarbershop.models.ModelProducts;
 
 public class ControllerProducts {
@@ -21,7 +19,7 @@ public class ControllerProducts {
         products = new ModelProducts(context, null);
         isUpdating = false;
         if (products.getData() == null) //no cached data
-            updateNews(azure);
+            updateProducts(azure);
     }
 
     @NonNull
@@ -29,10 +27,10 @@ public class ControllerProducts {
         return products;
     }
 
-    public void updateNews(@NonNull AzureConnect azure) {
+    public void updateProducts(@NonNull AzureConnect azure) {
         if (!isUpdating) {
             isUpdating = true;
-            azure.getTableTop(ModelNews.tablename, News.class, 500);
+            azure.getTableTop(ModelProducts.tablename, Product.class, 500);
         }
     }
 

@@ -15,26 +15,34 @@ import ru.byters.azure.AzureThrowListener;
 import ru.byters.bcbarbershop.R;
 import ru.byters.bcbarbershop.controllers.adapters.AdapterCategories;
 import ru.byters.bcbarbershop.controllers.adapters.AdapterNews;
+import ru.byters.bcbarbershop.controllers.adapters.AdapterProducts;
 import ru.byters.bcbarbershop.controllers.utils.MyImageLoadingListener;
 import ru.byters.bcbarbershop.dataclasses.Barbershop;
 import ru.byters.bcbarbershop.dataclasses.Category;
 import ru.byters.bcbarbershop.dataclasses.News;
+import ru.byters.bcbarbershop.dataclasses.Product;
 import ru.byters.bcbarbershop.models.ModelCategories;
 import ru.byters.bcbarbershop.models.ModelNews;
+import ru.byters.bcbarbershop.models.ModelProducts;
 import ru.byters.view.LabeledImageView;
 
 public class Controller extends Application implements AzureThrowListener {
     //public ModelProducts products;
     //public ModelMaestro maestro;
-    // public ModelEnroll enroll;
-    // public AdapterProducts adapterProducts;
-    // public AdapterMaestro adapterMaestro;
+    //public ModelEnroll enroll;
+    //public ModelProductsMaestro productmaestro;
     public ModelCategories categories;
+
+    public ControllerProducts controllerProducts;
     public ControllerNews controllerNews;
-    public ControllerBarbershopInfo barbershop;
+    public ControllerBarbershopInfo controllerBarbershopInfo;
+
+    //public AdapterProducts adapterProducts;
+    //public AdapterMaestro adapterMaestro;
     public AdapterNews adapterNews;
+    public AdapterProducts adapterProducts;
     public AdapterCategories adapterCategories;
-    //  ModelProductsMaestro productmaestro;
+
     AzureConnect azure;
     DisplayImageOptions options;
 
@@ -47,41 +55,41 @@ public class Controller extends Application implements AzureThrowListener {
                 .cacheInMemory(true).cacheOnDisc(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
 
-        barbershop = new ControllerBarbershopInfo();
-        categories = new ModelCategories(this, null);
-
         azure = new AzureConnect(this
                 , getString(R.string.azure_address)
                 , getString(R.string.azure_key));
         azure.addListener(this);
 
-        //ModelProducts.tablename = "Products";
+        //enroll = new ModelEnroll();
+        categories = new ModelCategories(this, null);
+
         //ModelProductsMaestro.tablename = "ProductsMaestro";
         //ModelMaestro.tablename = "Maestro";
+        ModelProducts.tablename = "Products";
         ModelNews.tablename = "News";
         ModelCategories.tablename = "Categories";
-        barbershop.model.tablename = "Barbershops";
 
-        // adapterProducts = new AdapterProducts(this);
-        //  adapterMaestro = new AdapterMaestro(this);
+        controllerBarbershopInfo = new ControllerBarbershopInfo();
+        controllerNews = new ControllerNews(this, azure);
+        controllerProducts = new ControllerProducts(this, azure);
+
+        //todo extract model
+        controllerBarbershopInfo.model.tablename = "Barbershops";
+
+        //adapterProducts = new AdapterProducts(this);
+        //adapterMaestro = new AdapterMaestro(this);
         adapterNews = new AdapterNews(this);
+        adapterProducts = new AdapterProducts(this);
         adapterCategories = new AdapterCategories(this);
 
-        // azure.getTableTop(ModelProducts.tablename, Product.class, 500);
-        // azure.getTableTop(ModelMaestro.tablename, Maestro.class, 500);
-        //  azure.getTableTop(ModelProductsMaestro.tablename, ProductMaestro.class, 500);
-
+        //azure.getTableTop(ModelMaestro.tablename, Maestro.class, 500);
+        //azure.getTableTop(ModelProductsMaestro.tablename, ProductMaestro.class, 500);
         azure.getTableTop(ModelCategories.tablename, Category.class, 500);
-        controllerNews = new ControllerNews(this, azure);
-        azure.getTableTop(barbershop.model.tablename, Barbershop.class, 500);
-
-        //enroll = new ModelEnroll();
+        azure.getTableTop(controllerBarbershopInfo.model.tablename, Barbershop.class, 500);
     }
 
     public void setImage(LabeledImageView v, News data) {
-
         ImageLoader.getInstance().loadImage(data.PhotoURI, options, new MyImageLoadingListener(v, data));
-
     }
 
     @Override
@@ -103,13 +111,16 @@ public class Controller extends Application implements AzureThrowListener {
         if (tablename.equals(ModelNews.tablename)) {
             controllerNews.setData(this, (ArrayList<News>) result);
             adapterNews.setDataUpdated();
+        } else if (tablename.equals(ModelProducts.tablename)) {
+            controllerProducts.setData(this, (ArrayList<Product>) result);
+            adapterProducts.setDataUpdated();
         } else if (tablename.equals(ModelCategories.tablename)) {
             adapterCategories.notifyDataSetChanged();
             categories.setData(this, (ArrayList<Category>) result);
-        } else if (tablename.equals(barbershop.model.tablename) && result != null) {
+        } else if (tablename.equals(controllerBarbershopInfo.model.tablename) && result != null) {
             ArrayList<Barbershop> l = (ArrayList<Barbershop>) result;
-            barbershop.model.setData(l.get(0));
-            barbershop.updateData();
+            controllerBarbershopInfo.model.setData(l.get(0));
+            controllerBarbershopInfo.updateData();
         }
 
     }
@@ -121,6 +132,10 @@ public class Controller extends Application implements AzureThrowListener {
 
     public void updateNews() {
         controllerNews.updateNews(azure);
+    }
+
+    public void updateProducts() {
+        controllerProducts.updateProducts(azure);
     }
 
 /*    public void sendEnroll() {
