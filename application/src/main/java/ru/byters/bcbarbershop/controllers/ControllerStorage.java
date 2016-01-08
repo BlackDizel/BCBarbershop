@@ -15,6 +15,7 @@ public class ControllerStorage {
 
     private static final String TAG = "controllerStorage";
     public static final String NEWS="cache_news";
+    public static final String CATEGORIES="cache_categories";
 
     public synchronized static void writeObjectToFile(Context context, Object object, String filename) {
 

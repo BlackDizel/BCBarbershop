@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ru.byters.bcbarbershop.R;
-import ru.byters.bcbarbershop.controllers.adapters.AdapterMainMenu;
+import ru.byters.bcbarbershop.controllers.Controller;
 
 public class FragmentMenu extends FragmentBase {
 
@@ -27,7 +27,7 @@ public class FragmentMenu extends FragmentBase {
         rvMenu.setLayoutManager(new GridLayoutManager(
                 rootView.getContext()
                 , rootView.getContext().getResources().getInteger(R.integer.menu_columns_num)));
-        rvMenu.setAdapter(new AdapterMainMenu(rootView.getContext()));
+        rvMenu.setAdapter(((Controller) rootView.getContext().getApplicationContext()).adapterCategories);
         rvMenu.addItemDecoration(new ItemsDecorator(rootView.getContext().getResources().getInteger(R.integer.menu_columns_num)));
         return rootView;
     }

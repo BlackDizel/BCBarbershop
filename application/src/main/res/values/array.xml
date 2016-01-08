@@ -10,13 +10,4 @@
         <item>#ff9800</item>
     </array>
 
-    <string-array name="main_menu">
-        <item>коррекция фигуры</item>
-        <item>массаж</item>
-        <item>косметология</item>
-        <item>эпиляция</item>
-        <item>ногтевой сервис</item>
-        <item>парикмахерский зал</item>
-    </string-array>
-
 </resources>
