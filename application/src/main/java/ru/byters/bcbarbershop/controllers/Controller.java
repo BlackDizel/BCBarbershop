@@ -27,7 +27,6 @@ import ru.byters.bcbarbershop.models.ModelProducts;
 import ru.byters.view.LabeledImageView;
 
 public class Controller extends Application implements AzureThrowListener {
-    //public ModelProducts products;
     //public ModelMaestro maestro;
     //public ModelEnroll enroll;
     //public ModelProductsMaestro productmaestro;
@@ -37,7 +36,6 @@ public class Controller extends Application implements AzureThrowListener {
     public ControllerNews controllerNews;
     public ControllerBarbershopInfo controllerBarbershopInfo;
 
-    //public AdapterProducts adapterProducts;
     //public AdapterMaestro adapterMaestro;
     public AdapterNews adapterNews;
     public AdapterProducts adapterProducts;
@@ -76,7 +74,6 @@ public class Controller extends Application implements AzureThrowListener {
         //todo extract model
         controllerBarbershopInfo.model.tablename = "Barbershops";
 
-        //adapterProducts = new AdapterProducts(this);
         //adapterMaestro = new AdapterMaestro(this);
         adapterNews = new AdapterNews(this);
         adapterProducts = new AdapterProducts(this);
@@ -97,10 +94,7 @@ public class Controller extends Application implements AzureThrowListener {
         if (error)
             result = null;
 
-            /*if (tablename.equals(ModelProducts.tablename)) {
-                products = new ModelProducts((ArrayList<Product>) result);
-                adapterProducts.updateModel(this);
-                adapterProducts.notifyDataSetChanged();
+            /*
             } else if (tablename.equals(ModelProductsMaestro.tablename))
                 productmaestro = new ModelProductsMaestro((ArrayList<ProductMaestro>) result);
             else if (tablename.equals(ModelMaestro.tablename)) {
