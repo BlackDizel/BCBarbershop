@@ -21,6 +21,7 @@ import ru.byters.bcbarbershop.dataclasses.Barbershop;
 import ru.byters.bcbarbershop.dataclasses.Category;
 import ru.byters.bcbarbershop.dataclasses.News;
 import ru.byters.bcbarbershop.dataclasses.Product;
+import ru.byters.bcbarbershop.models.ModelBarbershop;
 import ru.byters.bcbarbershop.models.ModelCategories;
 import ru.byters.bcbarbershop.models.ModelNews;
 import ru.byters.bcbarbershop.models.ModelProducts;
@@ -34,7 +35,7 @@ public class Controller extends Application implements AzureThrowListener {
 
     public ControllerProducts controllerProducts;
     public ControllerNews controllerNews;
-    public ControllerBarbershopInfo controllerBarbershopInfo;
+    public ControllerBarbershop controllerBarbershopInfo;
 
     //public AdapterMaestro adapterMaestro;
     public AdapterNews adapterNews;
@@ -66,13 +67,11 @@ public class Controller extends Application implements AzureThrowListener {
         ModelProducts.tablename = "Products";
         ModelNews.tablename = "News";
         ModelCategories.tablename = "Categories";
+        ModelBarbershop.tablename = "Barbershops";
 
-        controllerBarbershopInfo = new ControllerBarbershopInfo();
+        controllerBarbershopInfo = new ControllerBarbershop(this, azure);
         controllerNews = new ControllerNews(this, azure);
         controllerProducts = new ControllerProducts(this, azure);
-
-        //todo extract model
-        controllerBarbershopInfo.model.tablename = "Barbershops";
 
         //adapterMaestro = new AdapterMaestro(this);
         adapterNews = new AdapterNews(this);
@@ -82,7 +81,6 @@ public class Controller extends Application implements AzureThrowListener {
         //azure.getTableTop(ModelMaestro.tablename, Maestro.class, 500);
         //azure.getTableTop(ModelProductsMaestro.tablename, ProductMaestro.class, 500);
         azure.getTableTop(ModelCategories.tablename, Category.class, 500);
-        azure.getTableTop(controllerBarbershopInfo.model.tablename, Barbershop.class, 500);
     }
 
     public void setImage(LabeledImageView v, News data) {
@@ -111,10 +109,9 @@ public class Controller extends Application implements AzureThrowListener {
         } else if (tablename.equals(ModelCategories.tablename)) {
             adapterCategories.notifyDataSetChanged();
             categories.setData(this, (ArrayList<Category>) result);
-        } else if (tablename.equals(controllerBarbershopInfo.model.tablename) && result != null) {
-            ArrayList<Barbershop> l = (ArrayList<Barbershop>) result;
-            controllerBarbershopInfo.model.setData(l.get(0));
-            controllerBarbershopInfo.updateData();
+        } else if (tablename.equals(ModelBarbershop.tablename) && result != null) {
+            controllerBarbershopInfo.setData(this, (ArrayList<Barbershop>) result);
+            controllerBarbershopInfo.updateUI();
         }
 
     }
