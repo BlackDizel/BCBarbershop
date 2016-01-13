@@ -26,6 +26,7 @@
     <string name="action_promo">промо</string>
     <string name="action_community">сообщество</string>
     <string name="text_no_data">Нет данных</string>
+    <string name="call_to_barbershop">ЗВОНОК В САЛОН</string>
 
 
 </resources>
