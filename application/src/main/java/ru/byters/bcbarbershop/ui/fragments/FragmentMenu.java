@@ -43,8 +43,9 @@ public class FragmentMenu extends FragmentBase {
         public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
             int space = (int) getResources().getDimension(R.dimen.item_menu_margin);
             int pos = parent.getChildAdapterPosition(view);
-
-            if (columns == 2) {
+            if (columns == 1) {
+                outRect.set(4 * space, 4 * space, 4 * space, 0);
+            } else if (columns == 2) {
                 //[4]x[2][2]x[4]
                 if (pos % 2 == 0)
                     outRect.set(4 * space, 4 * space, 2 * space, 0);
