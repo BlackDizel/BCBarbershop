@@ -112,6 +112,8 @@ public class Controller extends Application implements AzureThrowListener {
         } else if (tablename.equals(ModelBarbershop.tablename) && result != null) {
             controllerBarbershopInfo.setData(this, (ArrayList<Barbershop>) result);
             controllerBarbershopInfo.updateUI();
+            if (controllerBarbershopInfo.model.getData() != null)
+                adapterCategories.updateFooter(controllerBarbershopInfo.model.getData().Phone);
         }
 
     }
