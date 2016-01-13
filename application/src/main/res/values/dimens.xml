@@ -11,8 +11,9 @@
     <dimen name="item_menu_margin">4dp</dimen>
     <dimen name="about_text_padding">16dp</dimen>
     <dimen name="text_news_title">24sp</dimen>
-    <dimen name="item_menu_padding_horizontal">8dp</dimen>
-    <dimen name="item_menu_padding_vertical">12dp</dimen>
+    <dimen name="item_menu_padding">16dp</dimen>
+    <dimen name="item_menu_text_lines_margin">16dp</dimen>
+    <dimen name="item_menu_main_height">104dp</dimen>
 
 
 </resources>
