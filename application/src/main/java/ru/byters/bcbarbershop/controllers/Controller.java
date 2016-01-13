@@ -51,7 +51,7 @@ public class Controller extends Application implements AzureThrowListener {
         ImageLoader.getInstance().init(config);
 
         options = new DisplayImageOptions.Builder()
-                .cacheInMemory(true).cacheOnDisc(true)
+                .cacheInMemory(true).cacheOnDisk(true)
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
 
         azure = new AzureConnect(this
