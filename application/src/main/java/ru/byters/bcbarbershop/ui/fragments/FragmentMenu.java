@@ -24,19 +24,32 @@ public class FragmentMenu extends FragmentBase {
 
         rvMenu = (RecyclerView) rootView.findViewById(R.id.rvMainMenu);
         rvMenu.setHasFixedSize(true);
-        rvMenu.setLayoutManager(new GridLayoutManager(
+        GridLayoutManager layoutManager = new GridLayoutManager(
                 rootView.getContext()
-                , rootView.getContext().getResources().getInteger(R.integer.menu_columns_num)));
+                , rootView.getContext().getResources().getInteger(R.integer.menu_columns_num));
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position == ((Controller) getActivity().getApplicationContext()).adapterCategories.getItemCount() - 1
+                        && position % 2 == 0
+                        && getActivity().getResources().getInteger(R.integer.menu_columns_num) > 1)
+                    return 2;
+                return 1;
+            }
+        });
+        rvMenu.setLayoutManager(layoutManager);
         rvMenu.setAdapter(((Controller) rootView.getContext().getApplicationContext()).adapterCategories);
-        rvMenu.addItemDecoration(new ItemsDecorator(rootView.getContext().getResources().getInteger(R.integer.menu_columns_num)));
+        rvMenu.addItemDecoration(new ItemsDecorator((Controller) getActivity().getApplicationContext(), rootView.getContext().getResources().getInteger(R.integer.menu_columns_num)));
         return rootView;
     }
 
     private class ItemsDecorator extends RecyclerView.ItemDecoration {
         private final int columns;
+        private Controller controller;
 
-        public ItemsDecorator(int columns) {
+        public ItemsDecorator(Controller controller, int columns) {
             this.columns = columns;
+            this.controller = controller;
         }
 
         @Override
@@ -60,6 +73,8 @@ public class FragmentMenu extends FragmentBase {
                 else if (pos % 3 == 2)
                     outRect.set(0, 4 * space, 6 * space, 0);
             }
+            if (controller.adapterCategories.getItemCount() - 1 == pos)
+                outRect.set(4 * space, 4 * space, 4 * space, 0);
         }
     }
 
