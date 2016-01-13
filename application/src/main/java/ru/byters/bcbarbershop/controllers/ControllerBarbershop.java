@@ -18,7 +18,7 @@ import ru.yandex.yandexmapkit.overlay.balloon.BalloonItem;
 public class ControllerBarbershop {
 
     @NonNull
-    ModelBarbershop model;
+    public ModelBarbershop model;
 
     private View v;
     private boolean isUpdating;
