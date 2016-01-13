@@ -35,7 +35,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
 
     @Override
     public int getItemCount() {
-        ArrayList<Product> list = controller.controllerProducts.getProducts().getDataWithID(CategoryID);
+        ArrayList<Product> list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(CategoryID);
         return list == null ? 0 : list.size();
     }
 
@@ -73,7 +73,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
 
         public void setData(int position) {
             Product item = null;
-            ArrayList<Product> list = controller.controllerProducts.getProducts().getDataWithID(CategoryID);
+            ArrayList<Product> list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(CategoryID);
             if (list == null) return;
             if (position < list.size()) item = list.get(position);
             if (item == null) return;

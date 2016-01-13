@@ -11,8 +11,8 @@ import ru.byters.bcbarbershop.dataclasses.Product;
 public class ModelProducts {
     public static String tablename;
     private ArrayList<Product> data;
-    private ArrayList<Product> savedData;
-    private int savedID;
+    private ArrayList<Product> savedTopLevelData;
+    private int savedCategoryID;
 
     public ModelProducts(Context context, ArrayList<Product> l) {
         data = l;
@@ -24,25 +24,26 @@ public class ModelProducts {
         return data;
     }
 
-    public ArrayList<Product> getDataWithID(int id) {
-        if (savedID == id && savedData != null)
-            return savedData;
+    public ArrayList<Product> getTopLevelDataWithCategoryID(int id) {
+        if (savedCategoryID == id && savedTopLevelData != null)
+            return savedTopLevelData;
 
         if (data == null) return null;
 
-        savedID = id;
-        savedData = new ArrayList<>();
+        savedCategoryID = id;
+        savedTopLevelData = new ArrayList<>();
         for (Product p : data)
-            if (p.getCategoryID() == savedID)
-                savedData.add(p);
+            if (p.getCategoryID() == savedCategoryID
+                    && p.getParentProduct() == 0)
+                savedTopLevelData.add(p);
 
-        return savedData;
+        return savedTopLevelData;
     }
 
     public void setData(@NonNull Context context, @NonNull ArrayList<Product> result) {
         data = result;
-        savedID = -1;
-        savedData = null;
+        savedCategoryID = -1;
+        savedTopLevelData = null;
         ControllerStorage.writeObjectToFile(context, data, ControllerStorage.PRODUCTS);
     }
 }
