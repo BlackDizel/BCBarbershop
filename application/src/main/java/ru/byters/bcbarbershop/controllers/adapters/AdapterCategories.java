@@ -31,7 +31,7 @@ public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.Vi
 
     @Override
     public int getItemCount() {
-        return controller.categories.getSize() + (TextUtils.isEmpty(phone) ? 0 : 1);
+        return controller.categories.getSizeTopLevel() + (TextUtils.isEmpty(phone) ? 0 : 1);
     }
 
     @Override
@@ -74,7 +74,8 @@ public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.Vi
                 tvItem.setText(controller.getResources().getString(R.string.call_to_barbershop));
                 tvDesc.setText("");
             } else {
-                Category item = controller.categories.getItem(position);
+                Category item = controller.categories.getItemTopLevel(position);
+                if (item == null) return;
                 tvItem.setText(item.getTitle().toUpperCase());
                 tvDesc.setText(item.getDescription());
                 categoryID = item.getCategoryID();
