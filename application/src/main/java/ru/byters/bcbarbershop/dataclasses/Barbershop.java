@@ -1,7 +1,9 @@
 package ru.byters.bcbarbershop.dataclasses;
 
 
-public class Barbershop {
+import java.io.Serializable;
+
+public class Barbershop implements Serializable{
     public int id;
     public String Title;
     public String Description;
