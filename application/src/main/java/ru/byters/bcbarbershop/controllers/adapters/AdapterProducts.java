@@ -55,7 +55,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
             ArrayList<Product> list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(categoryID);
             return list == null
                     ? 0
-                    : (list.size() + (controller.categories.getDataSubcategories(categoryID) == null ? 0 : 1));
+                    : (list.size() + (!isHeaderMode() ? 0 : 1));
         }
         return controller.controllerProducts.getProducts().getSubproducts(productID) == null
                 ? 0
@@ -69,7 +69,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (categoryID != NO_VALUE && position == 0 && controller.categories.getDataSubcategories(categoryID) != null)
+        if (position == 0 && isHeaderMode())
             return HEADER;
         return ITEM;
     }
@@ -90,6 +90,10 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
     @Override
     public void onRefresh() {
         controller.updateProducts();
+    }
+
+    public boolean isHeaderMode() {
+        return categoryID != NO_VALUE && controller.categories.getDataSubcategories(categoryID) != null;
     }
 
     public abstract class ViewHolderBase extends RecyclerView.ViewHolder {
