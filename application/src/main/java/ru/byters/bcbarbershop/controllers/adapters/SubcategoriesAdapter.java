@@ -1,5 +1,6 @@
 package ru.byters.bcbarbershop.controllers.adapters;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import ru.byters.bcbarbershop.R;
 import ru.byters.bcbarbershop.controllers.Controller;
 import ru.byters.bcbarbershop.dataclasses.Category;
+import ru.byters.bcbarbershop.ui.activities.ActivityShop;
 
 public class SubcategoriesAdapter extends RecyclerView.Adapter<SubcategoriesAdapter.ViewHolder> {
     private int categoryID;
@@ -38,16 +40,30 @@ public class SubcategoriesAdapter extends RecyclerView.Adapter<SubcategoriesAdap
         return categories == null ? 0 : categories.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView textView;
+        private int intent_category_id;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView;
+            itemView.setOnClickListener(this);
         }
 
         public void setData(int position) {
-            textView.setText(controller.categories.getDataSubcategories(categoryID).get(position).getTitle().toUpperCase());
+            Category category = controller.categories.getDataSubcategories(categoryID).get(position);
+            if (category == null) return;
+            intent_category_id = category.getCategoryID();
+            textView.setText(category.getTitle().toUpperCase());
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (controller.currentActivity == null)
+                return;
+            Intent intent = new Intent(controller, ActivityShop.class);
+            intent.putExtra(ActivityShop.INTENT_EXTRA_ID, intent_category_id);
+            controller.currentActivity.startActivity(intent);
         }
     }
 }
