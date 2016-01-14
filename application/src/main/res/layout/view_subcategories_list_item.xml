@@ -1,0 +1,9 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_subcategory_drawable"
+    android:paddingBottom="@dimen/item_sybcategories_list_padding_vertical"
+    android:paddingLeft="@dimen/item_sybcategories_list_padding_horizontal"
+    android:paddingRight="@dimen/item_sybcategories_list_padding_horizontal"
+    android:paddingTop="@dimen/item_sybcategories_list_padding_vertical"
+    android:textColor="@color/white" />
