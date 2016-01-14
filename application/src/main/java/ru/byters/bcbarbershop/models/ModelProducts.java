@@ -13,6 +13,8 @@ public class ModelProducts {
     private ArrayList<Product> data;
     private ArrayList<Product> savedTopLevelData;
     private int savedCategoryID;
+    private int savedProductId;
+    private ArrayList<Product> dataSubproduct;
 
     public ModelProducts(Context context, ArrayList<Product> l) {
         data = l;
@@ -44,7 +46,26 @@ public class ModelProducts {
         data = result;
         savedCategoryID = -1;
         savedTopLevelData = null;
+        savedProductId = -1;
+        dataSubproduct = null;
         ControllerStorage.writeObjectToFile(context, data, ControllerStorage.PRODUCTS);
+    }
+
+    public ArrayList<Product> getSubproducts(int id) {
+        if (id == savedProductId && dataSubproduct != null)
+            return dataSubproduct;
+
+        if (data == null) return null;
+
+        savedProductId = id;
+
+        dataSubproduct = new ArrayList<>();
+        for (Product product : data)
+            if (product.getParentProduct() == savedProductId)
+                dataSubproduct.add(product);
+
+        if (dataSubproduct.size() == 0) dataSubproduct = null;
+        return dataSubproduct;
     }
 }
 
