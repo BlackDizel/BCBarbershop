@@ -15,6 +15,8 @@ public class ActivityShop extends ActivityBase {
 
     public static final String INTENT_EXTRA_ID = "category_id";
     RecyclerView rvMenu;
+    AdapterProducts adapter;
+    int categoryID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +27,21 @@ public class ActivityShop extends ActivityBase {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        AdapterProducts adapter = ((Controller) getApplicationContext()).adapterProducts;
-        adapter.setCategoryID(getIntent().getIntExtra(INTENT_EXTRA_ID, -1));
-        adapter.setViews((SwipeRefreshLayout) findViewById(R.id.srlProducts));
+        adapter = ((Controller) getApplicationContext()).adapterProducts;
+        categoryID = getIntent().getIntExtra(INTENT_EXTRA_ID, -1);
 
         rvMenu = (RecyclerView) findViewById(R.id.rvShop);
         rvMenu.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         rvMenu.setLayoutManager(mLayoutManager);
         rvMenu.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.setCategoryID(categoryID);
+        adapter.setViews((SwipeRefreshLayout) findViewById(R.id.srlProducts));
     }
 
     @Override
