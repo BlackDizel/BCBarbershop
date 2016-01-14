@@ -14,6 +14,10 @@
     <dimen name="item_menu_padding">16dp</dimen>
     <dimen name="item_menu_text_lines_margin">16dp</dimen>
     <dimen name="item_menu_main_height">104dp</dimen>
-
+    <dimen name="item_sybcategories_list_padding_vertical">8dp</dimen>
+    <dimen name="item_sybcategories_list_padding_horizontal">16dp</dimen>
+    <dimen name="item_subcategory_margin">16dp</dimen>
+    <dimen name="item_subcategory_radius">24dp</dimen>
+    <dimen name="subcategories_list_height">64dp</dimen>
 
 </resources>
