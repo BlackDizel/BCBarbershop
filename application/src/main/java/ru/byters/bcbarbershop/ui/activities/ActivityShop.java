@@ -13,7 +13,8 @@ import ru.byters.bcbarbershop.controllers.adapters.AdapterProducts;
 
 public class ActivityShop extends ActivityBase {
 
-    public static final String INTENT_EXTRA_ID = "category_id";
+    public static final String INTENT_EXTRA_CATEGORY_ID = "category_id";
+    public static final String INTENT_EXTRA_PRODUCT_ID = "product_id";
     RecyclerView rvMenu;
     AdapterProducts adapter;
     int categoryID;
@@ -28,7 +29,7 @@ public class ActivityShop extends ActivityBase {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         adapter = ((Controller) getApplicationContext()).adapterProducts;
-        categoryID = getIntent().getIntExtra(INTENT_EXTRA_ID, -1);
+        categoryID = getIntent().getIntExtra(INTENT_EXTRA_CATEGORY_ID, -1);
 
         rvMenu = (RecyclerView) findViewById(R.id.rvShop);
         rvMenu.setHasFixedSize(true);

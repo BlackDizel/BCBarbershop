@@ -95,7 +95,7 @@ public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.Vi
                     v.getContext().startActivity(intent);
             } else {
                 Intent i = new Intent(v.getContext(), ActivityShop.class);
-                i.putExtra(ActivityShop.INTENT_EXTRA_ID, categoryID);
+                i.putExtra(ActivityShop.INTENT_EXTRA_CATEGORY_ID, categoryID);
                 v.getContext().startActivity(i);
             }
         }

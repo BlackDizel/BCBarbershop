@@ -62,7 +62,7 @@ public class SubcategoriesAdapter extends RecyclerView.Adapter<SubcategoriesAdap
             if (controller.currentActivity == null)
                 return;
             Intent intent = new Intent(controller, ActivityShop.class);
-            intent.putExtra(ActivityShop.INTENT_EXTRA_ID, intent_category_id);
+            intent.putExtra(ActivityShop.INTENT_EXTRA_CATEGORY_ID, intent_category_id);
             controller.currentActivity.startActivity(intent);
         }
     }
