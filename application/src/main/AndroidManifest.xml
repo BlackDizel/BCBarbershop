@@ -31,6 +31,7 @@
         <activity
             android:name=".ui.activities.ActivityShop"
             android:label="@string/title_activity_activity_shop" />
+        <activity android:name=".ui.activities.ActivityProductInfo" />
         <!--        <activity
                     android:name=".ui.activities.ActivityEnroll"
                     android:label="@string/title_activity_activity_enroll" />
