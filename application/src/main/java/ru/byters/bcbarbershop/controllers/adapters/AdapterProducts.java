@@ -127,7 +127,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
 
         @Override
         public void setData(int position) {
-            rv.setAdapter(new SubcategoriesAdapter(controller, categoryID));
+            rv.setAdapter(new AdapterSubcategories(controller, categoryID));
         }
     }
 

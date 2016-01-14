@@ -15,11 +15,11 @@ import ru.byters.bcbarbershop.controllers.Controller;
 import ru.byters.bcbarbershop.dataclasses.Category;
 import ru.byters.bcbarbershop.ui.activities.ActivityShop;
 
-public class SubcategoriesAdapter extends RecyclerView.Adapter<SubcategoriesAdapter.ViewHolder> {
+public class AdapterSubcategories extends RecyclerView.Adapter<AdapterSubcategories.ViewHolder> {
     private int categoryID;
     private Controller controller;
 
-    public SubcategoriesAdapter(@NonNull Controller controller, int categoryID) {
+    public AdapterSubcategories(@NonNull Controller controller, int categoryID) {
         this.categoryID = categoryID;
         this.controller = controller;
     }
