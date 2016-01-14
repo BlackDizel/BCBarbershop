@@ -1,7 +1,9 @@
 package ru.byters.bcbarbershop.controllers;
 
+import android.app.Activity;
 import android.app.Application;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -27,7 +29,7 @@ import ru.byters.bcbarbershop.models.ModelNews;
 import ru.byters.bcbarbershop.models.ModelProducts;
 import ru.byters.view.LabeledImageView;
 
-public class Controller extends Application implements AzureThrowListener {
+public class Controller extends Application implements AzureThrowListener, Application.ActivityLifecycleCallbacks {
     //public ModelMaestro maestro;
     //public ModelEnroll enroll;
     //public ModelProductsMaestro productmaestro;
@@ -41,6 +43,7 @@ public class Controller extends Application implements AzureThrowListener {
     public AdapterNews adapterNews;
     public AdapterProducts adapterProducts;
     public AdapterCategories adapterCategories;
+    public Activity currentActivity;
 
     AzureConnect azure;
     DisplayImageOptions options;
@@ -81,6 +84,8 @@ public class Controller extends Application implements AzureThrowListener {
         //azure.getTableTop(ModelMaestro.tablename, Maestro.class, 500);
         //azure.getTableTop(ModelProductsMaestro.tablename, ProductMaestro.class, 500);
         azure.getTableTop(ModelCategories.tablename, Category.class, 500);
+
+        registerActivityLifecycleCallbacks(this);
     }
 
     public void setImage(LabeledImageView v, News data) {
@@ -130,6 +135,43 @@ public class Controller extends Application implements AzureThrowListener {
     public void updateProducts() {
         controllerProducts.updateProducts(azure);
     }
+
+    //region activity lifecycle subscription
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+        currentActivity = activity;
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+        currentActivity = null;
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+
+    }
+    //endregion
 
 /*    public void sendEnroll() {
         azure.postTable("Enroll", enroll.getEnroll());
