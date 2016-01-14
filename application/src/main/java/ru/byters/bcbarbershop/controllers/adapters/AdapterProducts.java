@@ -1,5 +1,6 @@
 package ru.byters.bcbarbershop.controllers.adapters;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,17 +14,21 @@ import java.util.ArrayList;
 import ru.byters.bcbarbershop.R;
 import ru.byters.bcbarbershop.controllers.Controller;
 import ru.byters.bcbarbershop.dataclasses.Product;
+import ru.byters.bcbarbershop.ui.activities.ActivityProductInfo;
+import ru.byters.bcbarbershop.ui.activities.ActivityShop;
 import ru.byters.view.LabeledImageView;
 
 
 public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHolderBase>
         implements SwipeRefreshLayout.OnRefreshListener {
 
+    public static final int NO_VALUE = -1;
     private final static int HEADER = 0;
     private final static int ITEM = 1;
     Controller controller;
     SwipeRefreshLayout refreshLayout;
     int categoryID;
+    private int productID;
 
     public AdapterProducts(Controller controller) {
         this.controller = controller;
@@ -39,12 +44,22 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
         notifyDataSetChanged();
     }
 
+    public void setProductID(int productID) {
+        this.productID = productID;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
-        ArrayList<Product> list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(categoryID);
-        return list == null
+        if (categoryID != NO_VALUE) {
+            ArrayList<Product> list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(categoryID);
+            return list == null
+                    ? 0
+                    : (list.size() + (controller.categories.getDataSubcategories(categoryID) == null ? 0 : 1));
+        }
+        return controller.controllerProducts.getProducts().getSubproducts(productID) == null
                 ? 0
-                : (list.size() + (controller.categories.getDataSubcategories(categoryID) == null ? 0 : 1));
+                : controller.controllerProducts.getProducts().getSubproducts(productID).size();
     }
 
     @Override
@@ -54,7 +69,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0 && controller.categories.getDataSubcategories(categoryID) != null)
+        if (categoryID != NO_VALUE && position == 0 && controller.categories.getDataSubcategories(categoryID) != null)
             return HEADER;
         return ITEM;
     }
@@ -125,11 +140,18 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
         }
 
         public void setData(int position) {
-            int pos = controller.categories.getDataSubcategories(categoryID) == null ? position : position - 1;
             Product item = null;
-            ArrayList<Product> list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(categoryID);
+            ArrayList<Product> list;
+            int pos;
+            if (categoryID != NO_VALUE) {
+                pos = controller.categories.getDataSubcategories(categoryID) == null ? position : position - 1;
+                list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(categoryID);
+            } else {
+                pos = position;
+                list = controller.controllerProducts.getProducts().getSubproducts(productID);
+            }
             if (list == null) return;
-            if (pos < list.size()) item = list.get(pos);
+            if (pos >= 0 && pos < list.size()) item = list.get(pos);
             if (item == null) return;
 
             //todo setData
@@ -147,7 +169,15 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
 
         @Override
         public void onClick(View v) {
-            //todo implement
+            if (controller.controllerProducts.getProducts().getSubproducts(id) != null) {
+                Intent intent = new Intent(controller, ActivityShop.class);
+                intent.putExtra(ActivityShop.INTENT_EXTRA_PRODUCT_ID, id);
+                controller.currentActivity.startActivity(intent);
+            } else {
+                Intent intent = new Intent(controller, ActivityProductInfo.class);
+                intent.putExtra(ActivityProductInfo.INTENT_EXTRA_PRODUCT_ID, id);
+                controller.currentActivity.startActivity(intent);
+            }
         }
     }
 
