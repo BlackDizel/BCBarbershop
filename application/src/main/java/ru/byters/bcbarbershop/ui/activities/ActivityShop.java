@@ -45,7 +45,7 @@ public class ActivityShop extends ActivityBase {
                 int pos = parent.getChildLayoutPosition(view);
                 boolean isLast = (pos == adapter.getItemCount() - 1);
                 outRect.set(adapter.isHeaderMode() && pos == 0 ? 0 : margin
-                        , margin
+                        , adapter.isHeaderMode() && pos == 0 ? 0 : margin
                         , adapter.isHeaderMode() && pos == 0 ? 0 : margin
                         , isLast ? margin : 0);
             }
