@@ -1,11 +1,13 @@
 package ru.byters.bcbarbershop.ui.activities;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import ru.byters.bcbarbershop.R;
 import ru.byters.bcbarbershop.controllers.Controller;
@@ -36,6 +38,18 @@ public class ActivityShop extends ActivityBase {
         rvMenu.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         rvMenu.setLayoutManager(mLayoutManager);
+        rvMenu.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int margin = (int) getResources().getDimension(R.dimen.item_product_list_margin);
+                int pos = parent.getChildLayoutPosition(view);
+                boolean isLast = (pos == adapter.getItemCount() - 1);
+                outRect.set(adapter.isHeaderMode() && pos == 0 ? 0 : margin
+                        , margin
+                        , adapter.isHeaderMode() && pos == 0 ? 0 : margin
+                        , isLast ? margin : 0);
+            }
+        });
         rvMenu.setAdapter(adapter);
     }
 
