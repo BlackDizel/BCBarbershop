@@ -5,9 +5,14 @@ import android.graphics.Rect;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 
@@ -134,13 +139,16 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
     public class ViewHolderItem extends ViewHolderBase
             implements View.OnClickListener {
 
-        LabeledImageView view;
+        ImageView imgView;
+        TextView tvTitle;
         int id;
 
         public ViewHolderItem(View v) {
             super(v);
             v.setOnClickListener(this);
-            view = (LabeledImageView) v;
+            imgView = (ImageView) v.findViewById(ru.byters.view.R.id.imgView);
+            tvTitle = (TextView) v.findViewById(ru.byters.view.R.id.tvPrimary);
+            v.findViewById(ru.byters.view.R.id.tvEnd).setVisibility(View.GONE);
         }
 
         public void setData(int position) {
@@ -158,15 +166,12 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
             if (pos >= 0 && pos < list.size()) item = list.get(pos);
             if (item == null) return;
 
-            //todo setData
-            /*
-            if (!TextUtils.isEmpty(item.PhotoURI))
-                ((Controller) view.getContext().getApplicationContext()).setImage(view, item);
+            if (!TextUtils.isEmpty(item.getPhotoURI()))
+                ImageLoader.getInstance().displayImage(item.getPhotoURI(), imgView);
             else {
-                Calendar c = Calendar.getInstance();
-                c.setTime(item.NewsDate);
-                view.setData(null, item.Title, item.Description, c);
-            }*/
+                //todo setData
+            }
+            tvTitle.setText(item.getTitle());
 
             id = item.getProductID();
         }
