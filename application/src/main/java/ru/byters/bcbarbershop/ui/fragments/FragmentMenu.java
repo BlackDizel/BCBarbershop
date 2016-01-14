@@ -74,7 +74,7 @@ public class FragmentMenu extends FragmentBase {
                     outRect.set(0, 4 * space, 6 * space, 0);
             }
             if (controller.adapterCategories.getItemCount() - 1 == pos)
-                outRect.set(4 * space, 4 * space, 4 * space, 0);
+                outRect.set(4 * space, 4 * space, 4 * space, 4 * space);
         }
     }
 
