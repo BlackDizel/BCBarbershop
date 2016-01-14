@@ -33,11 +33,11 @@ public class Controller extends Application implements AzureThrowListener, Appli
     //public ModelMaestro maestro;
     //public ModelEnroll enroll;
     //public ModelProductsMaestro productmaestro;
-    public ModelCategories categories;
 
     public ControllerProducts controllerProducts;
     public ControllerNews controllerNews;
     public ControllerBarbershop controllerBarbershopInfo;
+    public ControllerCategories controllerCategories;
 
     //public AdapterMaestro adapterMaestro;
     public AdapterNews adapterNews;
@@ -63,7 +63,6 @@ public class Controller extends Application implements AzureThrowListener, Appli
         azure.addListener(this);
 
         //enroll = new ModelEnroll();
-        categories = new ModelCategories(this, null);
 
         //ModelProductsMaestro.tablename = "ProductsMaestro";
         //ModelMaestro.tablename = "Maestro";
@@ -75,6 +74,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
         controllerBarbershopInfo = new ControllerBarbershop(this, azure);
         controllerNews = new ControllerNews(this, azure);
         controllerProducts = new ControllerProducts(this, azure);
+        controllerCategories = new ControllerCategories(this, azure);
 
         //adapterMaestro = new AdapterMaestro(this);
         adapterNews = new AdapterNews(this);
@@ -113,7 +113,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
             adapterProducts.setDataUpdated();
         } else if (tablename.equals(ModelCategories.tablename)) {
             adapterCategories.notifyDataSetChanged();
-            categories.setData(this, (ArrayList<Category>) result);
+            controllerCategories.setData(this, (ArrayList<Category>) result);
         } else if (tablename.equals(ModelBarbershop.tablename) && result != null) {
             controllerBarbershopInfo.setData(this, (ArrayList<Barbershop>) result);
             controllerBarbershopInfo.updateUI();

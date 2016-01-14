@@ -98,7 +98,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
     }
 
     public boolean isHeaderMode() {
-        return categoryID != NO_VALUE && controller.categories.getDataSubcategories(categoryID) != null;
+        return categoryID != NO_VALUE && controller.controllerCategories.getCategorties().getDataSubcategories(categoryID) != null;
     }
 
     public abstract class ViewHolderBase extends RecyclerView.ViewHolder {
@@ -122,8 +122,8 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
                 @Override
                 public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                     int pos = parent.getChildLayoutPosition(view);
-                    boolean isLast = (controller.categories.getDataSubcategories(categoryID) != null
-                            && pos == controller.categories.getDataSubcategories(categoryID).size() - 1);
+                    boolean isLast = (controller.controllerCategories.getCategorties().getDataSubcategories(categoryID) != null
+                            && pos == controller.controllerCategories.getCategorties().getDataSubcategories(categoryID).size() - 1);
                     int margin = (int) controller.getResources().getDimension(R.dimen.item_subcategory_margin);
                     outRect.set(margin, margin, isLast ? margin : 0, margin);
                 }
@@ -156,7 +156,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
             ArrayList<Product> list;
             int pos;
             if (categoryID != NO_VALUE) {
-                pos = controller.categories.getDataSubcategories(categoryID) == null ? position : position - 1;
+                pos = controller.controllerCategories.getCategorties().getDataSubcategories(categoryID) == null ? position : position - 1;
                 list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(categoryID);
             } else {
                 pos = position;
