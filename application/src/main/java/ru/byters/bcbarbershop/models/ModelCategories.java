@@ -13,6 +13,9 @@ public class ModelCategories {
     public static String tablename;
     private ArrayList<Category> data;
     private ArrayList<Category> dataTopLevel;
+    private int savedSubcategoryId;
+    private ArrayList<Category> dataSubcategories;
+
 
     public ModelCategories(Context context, ArrayList<Category> l) {
         data = l;
@@ -59,7 +62,25 @@ public class ModelCategories {
     public void setData(@NonNull Context context, @NonNull ArrayList<Category> result) {
         data = result;
         dataTopLevel = null;
+        savedSubcategoryId = 0;
+        dataSubcategories = null;
         ControllerStorage.writeObjectToFile(context, data, ControllerStorage.CATEGORIES);
     }
 
+    public ArrayList<Category> getDataSubcategories(int categoryID) {
+        if (categoryID == savedSubcategoryId && dataSubcategories != null)
+            return dataSubcategories;
+
+        if (data == null) return null;
+
+        savedSubcategoryId = categoryID;
+
+        dataSubcategories = new ArrayList<>();
+        for (Category category : data)
+            if (category.getParentCategory() == savedSubcategoryId)
+                dataSubcategories.add(category);
+
+        if (dataSubcategories.size() == 0) dataSubcategories = null;
+        return dataSubcategories;
+    }
 }
