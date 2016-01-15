@@ -2,6 +2,7 @@ package ru.byters.bcbarbershop.models;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -66,6 +67,14 @@ public class ModelProducts {
 
         if (dataSubproduct.size() == 0) dataSubproduct = null;
         return dataSubproduct;
+    }
+
+    @Nullable
+    public Product getProductWithId(int id) {
+        if (data == null) return null;
+        for (Product p : data)
+            if (p.getProductID() == id) return p;
+        return null;
     }
 }
 
