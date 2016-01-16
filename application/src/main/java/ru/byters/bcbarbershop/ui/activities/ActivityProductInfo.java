@@ -25,6 +25,7 @@ public class ActivityProductInfo extends ActivityBase {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("");
 
         Product product = ((Controller) getApplicationContext()).controllerProducts.getProducts().getProductWithId(getIntent().getIntExtra(INTENT_EXTRA_PRODUCT_ID, -1));
 
