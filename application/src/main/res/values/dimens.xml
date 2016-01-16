@@ -23,5 +23,8 @@
     <dimen name="product_info_title_margin_top">32dp</dimen>
     <dimen name="product_info_text_padding">16dp</dimen>
     <dimen name="product_info_fab_margin">16dp</dimen>
+    <dimen name="activity_enroll_content_padding">16dp</dimen>
+    <dimen name="activity_enroll_item_margin">16dp</dimen>
+    <dimen name="activity_enroll_date_padding">16dp</dimen>
 
 </resources>

@@ -34,9 +34,8 @@
         <activity
             android:name=".ui.activities.ActivityProductInfo"
             android:screenOrientation="portrait" />
-        <!--        <activity
-                    android:name=".ui.activities.ActivityEnroll"
-                    android:label="@string/title_activity_activity_enroll" />
+        <activity android:name=".ui.activities.ActivityEnroll" />
+        <!--
                 <activity
                     android:name=".ui.activities.ActivityDateTime"
                     android:label="@string/title_activity_activity_date_time" />

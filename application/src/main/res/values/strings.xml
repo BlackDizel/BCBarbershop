@@ -8,14 +8,9 @@
     <string name="action_settings">Настройки</string>
     <string name="title_activity_activity_shop">Услуги</string>
     <string name="btEnroll">Записаться</string>
-    <string name="title_activity_activity_enroll">Запись</string>
-    <string name="tomorrow">завтра</string>
-    <string name="after_one_day">послезавтра</string>
     <string name="choose_date">выбрать дату</string>
-    <string name="haircut">парикмахерский зал</string>
-    <string name="manicure">маникюрный зал</string>
     <string name="choose_service">выбрать услугу</string>
-    <string name="action_ok">OK</string>
+    <string name="action_enroll_confirm">Подтвердить запись</string>
     <string name="title_activity_activity_date_time">Выбор даты</string>
     <string name="title_activity_activity_maestro">ActivityMaestro</string>
     <string name="title_activity_news_details">Детали</string>

@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ru.byters.bcbarbershop.ui.activities.ActivityEnroll">
+
+    <!--todo add icon -->
+    <item
+        android:id="@+id/action_confirm"
+        android:icon="@android:drawable/ic_dialog_alert"
+        android:title="@string/action_enroll_confirm"
+        app:showAsAction="always" />
+</menu>
