@@ -20,5 +20,8 @@
     <dimen name="item_subcategory_radius">24dp</dimen>
     <dimen name="subcategories_list_height">64dp</dimen>
     <dimen name="item_product_list_margin">16dp</dimen>
+    <dimen name="product_info_title_margin_top">32dp</dimen>
+    <dimen name="product_info_text_padding">16dp</dimen>
+    <dimen name="product_info_fab_margin">16dp</dimen>
 
 </resources>
