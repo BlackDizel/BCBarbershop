@@ -90,9 +90,9 @@ public class AdapterMaestro extends RecyclerView.Adapter<AdapterMaestro.ViewHold
 
         @Override
         public void onClick(View v) {
-        //    ActivityMaestro a = (ActivityMaestro) v.getContext();
-        //    if (a != null)
-        //        a.confirm(id);
+            ActivityMaestro a = (ActivityMaestro) v.getContext();
+            if (a != null)
+                a.confirm(id);
         }
     }
 
