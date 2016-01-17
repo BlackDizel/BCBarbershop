@@ -16,6 +16,7 @@ import ru.byters.azure.AzureConnect;
 import ru.byters.azure.AzureThrowListener;
 import ru.byters.bcbarbershop.R;
 import ru.byters.bcbarbershop.controllers.adapters.AdapterCategories;
+import ru.byters.bcbarbershop.controllers.adapters.AdapterMaestro;
 import ru.byters.bcbarbershop.controllers.adapters.AdapterNews;
 import ru.byters.bcbarbershop.controllers.adapters.AdapterProducts;
 import ru.byters.bcbarbershop.controllers.utils.MyImageLoadingListener;
@@ -43,7 +44,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
     public ControllerMaestro controllerMaestro;
     public ControllerProductMaestro controllerProductMaestro;
 
-    //public AdapterMaestro adapterMaestro;
+    public AdapterMaestro adapterMaestro;
     public AdapterNews adapterNews;
     public AdapterProducts adapterProducts;
     public AdapterCategories adapterCategories;
@@ -82,7 +83,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
         controllerMaestro = new ControllerMaestro(this, azure);
         controllerProductMaestro = new ControllerProductMaestro(this, azure);
 
-        //adapterMaestro = new AdapterMaestro(this);
+        adapterMaestro = new AdapterMaestro(this);
         adapterNews = new AdapterNews(this);
         adapterProducts = new AdapterProducts(this);
         adapterCategories = new AdapterCategories(this);
@@ -99,12 +100,13 @@ public class Controller extends Application implements AzureThrowListener, Appli
         if (error)
             result = null;
 
-        if (tablename.equals(ModelProductsMaestro.tablename))
+        if (tablename.equals(ModelProductsMaestro.tablename)) {
             controllerProductMaestro.setData(this, (ArrayList<ProductMaestro>) result);
-        else if (tablename.equals(ModelMaestro.tablename)) {
+            controllerMaestro.getModel().updateProductsData();
+            adapterMaestro.setDataUpdated();
+        } else if (tablename.equals(ModelMaestro.tablename)) {
             controllerMaestro.setData(this, (ArrayList<Maestro>) result);
-            //adapterMaestro.updateModel(this);
-            //adapterMaestro.notifyDataSetChanged();
+            adapterMaestro.setDataUpdated();
         } else if (tablename.equals(ModelNews.tablename)) {
             controllerNews.setData(this, (ArrayList<News>) result);
             adapterNews.setDataUpdated();
