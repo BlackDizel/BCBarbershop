@@ -24,22 +24,24 @@ import ru.byters.bcbarbershop.dataclasses.Category;
 import ru.byters.bcbarbershop.dataclasses.Maestro;
 import ru.byters.bcbarbershop.dataclasses.News;
 import ru.byters.bcbarbershop.dataclasses.Product;
+import ru.byters.bcbarbershop.dataclasses.ProductMaestro;
 import ru.byters.bcbarbershop.models.ModelBarbershop;
 import ru.byters.bcbarbershop.models.ModelCategories;
 import ru.byters.bcbarbershop.models.ModelMaestro;
 import ru.byters.bcbarbershop.models.ModelNews;
 import ru.byters.bcbarbershop.models.ModelProducts;
+import ru.byters.bcbarbershop.models.ModelProductsMaestro;
 import ru.byters.view.LabeledImageView;
 
 public class Controller extends Application implements AzureThrowListener, Application.ActivityLifecycleCallbacks {
     //public ModelEnroll enroll;
-    //public ModelProductsMaestro productmaestro;
 
     public ControllerProducts controllerProducts;
     public ControllerNews controllerNews;
     public ControllerBarbershop controllerBarbershopInfo;
     public ControllerCategories controllerCategories;
     public ControllerMaestro controllerMaestro;
+    public ControllerProductMaestro controllerProductMaestro;
 
     //public AdapterMaestro adapterMaestro;
     public AdapterNews adapterNews;
@@ -78,13 +80,13 @@ public class Controller extends Application implements AzureThrowListener, Appli
         controllerProducts = new ControllerProducts(this, azure);
         controllerCategories = new ControllerCategories(this, azure);
         controllerMaestro = new ControllerMaestro(this, azure);
+        controllerProductMaestro = new ControllerProductMaestro(this, azure);
 
         //adapterMaestro = new AdapterMaestro(this);
         adapterNews = new AdapterNews(this);
         adapterProducts = new AdapterProducts(this);
         adapterCategories = new AdapterCategories(this);
 
-        //azure.getTableTop(ModelProductsMaestro.tablename, ProductMaestro.class, 500);
         registerActivityLifecycleCallbacks(this);
     }
 
@@ -97,11 +99,9 @@ public class Controller extends Application implements AzureThrowListener, Appli
         if (error)
             result = null;
 
-            /*
-            } else if (tablename.equals(ModelProductsMaestro.tablename))
-                productmaestro = new ModelProductsMaestro((ArrayList<ProductMaestro>) result);
-            else*/
-        if (tablename.equals(ModelMaestro.tablename)) {
+        if (tablename.equals(ModelProductsMaestro.tablename))
+            controllerProductMaestro.setData(this, (ArrayList<ProductMaestro>) result);
+        else if (tablename.equals(ModelMaestro.tablename)) {
             controllerMaestro.setData(this, (ArrayList<Maestro>) result);
             //adapterMaestro.updateModel(this);
             //adapterMaestro.notifyDataSetChanged();
