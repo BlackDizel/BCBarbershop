@@ -35,13 +35,12 @@
             android:name=".ui.activities.ActivityProductInfo"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activities.ActivityEnroll" />
+        <activity android:name=".ui.activities.ActivityMaestro" />
         <!--
                 <activity
                     android:name=".ui.activities.ActivityDateTime"
                     android:label="@string/title_activity_activity_date_time" />
-                <activity
-                    android:name=".ui.activities.ActivityMaestro"
-                    android:label="@string/title_activity_activity_maestro" />
+
                 -->
     </application>
 
