@@ -129,11 +129,11 @@ public class Controller extends Application implements AzureThrowListener, Appli
     }
 
     public void updateNews() {
-        controllerNews.updateNews(azure);
+        controllerNews.updateData(azure);
     }
 
     public void updateProducts() {
-        controllerProducts.updateProducts(azure);
+        controllerProducts.updateData(azure);
     }
 
     //region activity lifecycle subscription

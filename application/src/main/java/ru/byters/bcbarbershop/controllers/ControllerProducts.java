@@ -13,21 +13,21 @@ public class ControllerProducts {
 
     private boolean isUpdating;
     @NonNull
-    private ModelProducts products;
+    private ModelProducts model;
 
     public ControllerProducts(@NonNull Context context, @NonNull AzureConnect azure) {
-        products = new ModelProducts(context, null);
+        model = new ModelProducts(context, null);
         isUpdating = false;
-        if (products.getData() == null) //no cached data
-            updateProducts(azure);
+        if (model.getData() == null) //no cached data
+            updateData(azure);
     }
 
     @NonNull
-    public ModelProducts getProducts() {
-        return products;
+    public ModelProducts getModel() {
+        return model;
     }
 
-    public void updateProducts(@NonNull AzureConnect azure) {
+    public void updateData(@NonNull AzureConnect azure) {
         if (!isUpdating) {
             isUpdating = true;
             azure.getTableTop(ModelProducts.tablename, Product.class, 500);
@@ -37,6 +37,6 @@ public class ControllerProducts {
     public void setData(@NonNull Context context, ArrayList<Product> result) {
         isUpdating = false;
         if (result != null)
-            products.setData(context, result);
+            model.setData(context, result);
     }
 }

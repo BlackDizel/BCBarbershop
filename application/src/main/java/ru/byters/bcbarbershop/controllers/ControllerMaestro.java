@@ -19,15 +19,15 @@ public class ControllerMaestro {
         model = new ModelMaestro(context, null);
         isUpdating = false;
         if (model.getData() == null) //no cached model
-            updateModel(azure);
+            updateData(azure);
     }
 
     @NonNull
-    public ModelMaestro getData() {
+    public ModelMaestro getModel() {
         return model;
     }
 
-    public void updateModel(@NonNull AzureConnect azure) {
+    public void updateData(@NonNull AzureConnect azure) {
         if (!isUpdating) {
             isUpdating = true;
             azure.getTableTop(ModelMaestro.tablename, Maestro.class, 500);

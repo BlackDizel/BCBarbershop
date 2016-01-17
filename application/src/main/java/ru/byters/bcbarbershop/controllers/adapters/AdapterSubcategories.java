@@ -36,7 +36,7 @@ public class AdapterSubcategories extends RecyclerView.Adapter<AdapterSubcategor
 
     @Override
     public int getItemCount() {
-        ArrayList<Category> categories = controller.controllerCategories.getCategorties().getDataSubcategories(categoryID);
+        ArrayList<Category> categories = controller.controllerCategories.getModel().getDataSubcategories(categoryID);
         return categories == null ? 0 : categories.size();
     }
 
@@ -51,7 +51,7 @@ public class AdapterSubcategories extends RecyclerView.Adapter<AdapterSubcategor
         }
 
         public void setData(int position) {
-            Category category = controller.controllerCategories.getCategorties().getDataSubcategories(categoryID).get(position);
+            Category category = controller.controllerCategories.getModel().getDataSubcategories(categoryID).get(position);
             if (category == null) return;
             intent_category_id = category.getCategoryID();
             textView.setText(category.getTitle().toUpperCase());

@@ -31,7 +31,7 @@ public class ActivityProductInfo extends ActivityBase implements View.OnClickLis
         setTitle("");
 
         product_id = getIntent().getIntExtra(INTENT_EXTRA_PRODUCT_ID, -1);
-        Product product = ((Controller) getApplicationContext()).controllerProducts.getProducts().getProductWithId(product_id);
+        Product product = ((Controller) getApplicationContext()).controllerProducts.getModel().getProductWithId(product_id);
 
         if (product != null) {
             ((TextView) findViewById(R.id.tvTitle)).setText(product.getTitle());

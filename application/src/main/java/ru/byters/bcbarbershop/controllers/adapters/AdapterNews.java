@@ -39,7 +39,7 @@ public class AdapterNews
 
     @Override
     public int getItemCount() {
-        return controller.controllerNews.getNews().getSize();
+        return controller.controllerNews.getModel().getSize();
     }
 
     @Override
@@ -77,20 +77,20 @@ public class AdapterNews
                 FilterResults results = new FilterResults();
 
                 if (TextUtils.isEmpty(constraint)) {
-                    controller.controllerNews.getNews().resetData();
+                    controller.controllerNews.getModel().resetData();
                 } else {
-                    controller.controllerNews.getNews().mode = Integer.valueOf((String) constraint);
-                    controller.controllerNews.getNews().setFilteredList();
+                    controller.controllerNews.getModel().mode = Integer.valueOf((String) constraint);
+                    controller.controllerNews.getModel().setFilteredList();
                 }
 
-                results.count = controller.controllerNews.getNews().getSize();
-                results.values = controller.controllerNews.getNews().getData();
+                results.count = controller.controllerNews.getModel().getSize();
+                results.values = controller.controllerNews.getModel().getData();
                 return results;
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                setStateData(controller.controllerNews.getNews().getData() != null);
+                setStateData(controller.controllerNews.getModel().getData() != null);
                 notifyDataSetChanged();
             }
         };
@@ -116,7 +116,7 @@ public class AdapterNews
         }
 
         public void setData(int position) {
-            News item = controller.controllerNews.getNews().getItem(position);
+            News item = controller.controllerNews.getModel().getItem(position);
 
             if (!TextUtils.isEmpty(item.PhotoURI))
                 ((Controller) view.getContext().getApplicationContext()).setImage(view, item);

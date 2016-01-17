@@ -17,7 +17,7 @@ import ru.byters.bcbarbershop.dataclasses.News;
 public class ControllerNewsActivity {
 
     public void setUI(Controller controller, ViewGroup view, int id) {
-        News news = controller.controllerNews.getNews().getItemById(id);
+        News news = controller.controllerNews.getModel().getItemById(id);
         if (news == null) return;
 
         View v;

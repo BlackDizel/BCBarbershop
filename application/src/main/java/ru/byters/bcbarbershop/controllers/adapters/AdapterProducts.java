@@ -57,14 +57,14 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
     @Override
     public int getItemCount() {
         if (categoryID != NO_VALUE) {
-            ArrayList<Product> list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(categoryID);
+            ArrayList<Product> list = controller.controllerProducts.getModel().getTopLevelDataWithCategoryID(categoryID);
             return list == null
                     ? 0
                     : (list.size() + (!isHeaderMode() ? 0 : 1));
         }
-        return controller.controllerProducts.getProducts().getSubproducts(productID) == null
+        return controller.controllerProducts.getModel().getSubproducts(productID) == null
                 ? 0
-                : controller.controllerProducts.getProducts().getSubproducts(productID).size();
+                : controller.controllerProducts.getModel().getSubproducts(productID).size();
     }
 
     @Override
@@ -98,7 +98,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
     }
 
     public boolean isHeaderMode() {
-        return categoryID != NO_VALUE && controller.controllerCategories.getCategorties().getDataSubcategories(categoryID) != null;
+        return categoryID != NO_VALUE && controller.controllerCategories.getModel().getDataSubcategories(categoryID) != null;
     }
 
     public abstract class ViewHolderBase extends RecyclerView.ViewHolder {
@@ -122,8 +122,8 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
                 @Override
                 public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                     int pos = parent.getChildLayoutPosition(view);
-                    boolean isLast = (controller.controllerCategories.getCategorties().getDataSubcategories(categoryID) != null
-                            && pos == controller.controllerCategories.getCategorties().getDataSubcategories(categoryID).size() - 1);
+                    boolean isLast = (controller.controllerCategories.getModel().getDataSubcategories(categoryID) != null
+                            && pos == controller.controllerCategories.getModel().getDataSubcategories(categoryID).size() - 1);
                     int margin = (int) controller.getResources().getDimension(R.dimen.item_subcategory_margin);
                     outRect.set(margin, margin, isLast ? margin : 0, margin);
                 }
@@ -156,11 +156,11 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
             ArrayList<Product> list;
             int pos;
             if (categoryID != NO_VALUE) {
-                pos = controller.controllerCategories.getCategorties().getDataSubcategories(categoryID) == null ? position : position - 1;
-                list = controller.controllerProducts.getProducts().getTopLevelDataWithCategoryID(categoryID);
+                pos = controller.controllerCategories.getModel().getDataSubcategories(categoryID) == null ? position : position - 1;
+                list = controller.controllerProducts.getModel().getTopLevelDataWithCategoryID(categoryID);
             } else {
                 pos = position;
-                list = controller.controllerProducts.getProducts().getSubproducts(productID);
+                list = controller.controllerProducts.getModel().getSubproducts(productID);
             }
             if (list == null) return;
             if (pos >= 0 && pos < list.size()) item = list.get(pos);
@@ -178,7 +178,7 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
 
         @Override
         public void onClick(View v) {
-            if (controller.controllerProducts.getProducts().getSubproducts(id) != null) {
+            if (controller.controllerProducts.getModel().getSubproducts(id) != null) {
                 Intent intent = new Intent(controller, ActivityShop.class);
                 intent.putExtra(ActivityShop.INTENT_EXTRA_PRODUCT_ID, id);
                 controller.currentActivity.startActivity(intent);

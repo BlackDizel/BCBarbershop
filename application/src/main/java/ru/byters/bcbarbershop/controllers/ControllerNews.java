@@ -13,21 +13,21 @@ public class ControllerNews {
 
     private boolean isUpdating;
     @NonNull
-    private ModelNews news;
+    private ModelNews model;
 
     public ControllerNews(@NonNull Context context, @NonNull AzureConnect azure) {
-        news = new ModelNews(context, null);
+        model = new ModelNews(context, null);
         isUpdating = false;
-        if (news.getData() == null) //no cached data
-            updateNews(azure);
+        if (model.getData() == null) //no cached data
+            updateData(azure);
     }
 
     @NonNull
-    public ModelNews getNews() {
-        return news;
+    public ModelNews getModel() {
+        return model;
     }
 
-    public void updateNews(@NonNull AzureConnect azure) {
+    public void updateData(@NonNull AzureConnect azure) {
         if (!isUpdating) {
             isUpdating = true;
             azure.getTableTop(ModelNews.tablename, News.class, 500);
@@ -37,6 +37,6 @@ public class ControllerNews {
     public void setData(@NonNull Context context, ArrayList<News> result) {
         isUpdating = false;
         if (result != null)
-            news.setData(context, result);
+            model.setData(context, result);
     }
 }

@@ -13,18 +13,18 @@ public class ControllerCategories {
 
     private boolean isUpdating;
     @NonNull
-    private ModelCategories categorties;
+    private ModelCategories model;
 
     public ControllerCategories(@NonNull Context context, @NonNull AzureConnect azure) {
-        categorties = new ModelCategories(context, null);
+        model = new ModelCategories(context, null);
         isUpdating = false;
-        if (categorties.getData() == null) //no cached data
+        if (model.getData() == null) //no cached data
             updateData(azure);
     }
 
     @NonNull
-    public ModelCategories getCategorties() {
-        return categorties;
+    public ModelCategories getModel() {
+        return model;
     }
 
     public void updateData(@NonNull AzureConnect azure) {
@@ -37,6 +37,6 @@ public class ControllerCategories {
     public void setData(@NonNull Context context, ArrayList<Category> result) {
         isUpdating = false;
         if (result != null)
-            categorties.setData(context, result);
+            model.setData(context, result);
     }
 }

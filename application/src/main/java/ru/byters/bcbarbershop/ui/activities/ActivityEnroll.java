@@ -66,7 +66,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
         super.onResume();
 
         if (product_id != NO_VALUE) {
-            Product product = ((Controller) getApplicationContext()).controllerProducts.getProducts().getProductWithId(product_id);
+            Product product = ((Controller) getApplicationContext()).controllerProducts.getModel().getProductWithId(product_id);
             if (product != null) {
                 if (!TextUtils.isEmpty(product.getPhotoURI())) {
                     ImageView imgView = ((ImageView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.imgView));
