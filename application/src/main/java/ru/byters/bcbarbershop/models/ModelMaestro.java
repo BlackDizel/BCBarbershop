@@ -59,4 +59,12 @@ public class ModelMaestro {
         if (savedDataWithProductId.size() == 0) savedDataWithProductId = null;
         return savedDataWithProductId;
     }
+
+    @Nullable
+    public Maestro getMaestroWithId(int maestro_id) {
+        if (data == null) return null;
+        for (Maestro maestro : data)
+            if (maestro.MaestroID == maestro_id) return maestro;
+        return null;
+    }
 }
