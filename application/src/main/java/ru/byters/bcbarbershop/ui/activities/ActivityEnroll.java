@@ -2,6 +2,7 @@ package ru.byters.bcbarbershop.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -15,16 +16,20 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import ru.byters.bcbarbershop.R;
 import ru.byters.bcbarbershop.controllers.Controller;
+import ru.byters.bcbarbershop.dataclasses.Maestro;
 import ru.byters.bcbarbershop.dataclasses.Product;
 
 public class ActivityEnroll extends ActivityBase implements OnClickListener {
 
     public static final String INTENT_EXTRA_PRODUCT_ID = "product_id";
+    private static final String INTENT_EXTRA_MAESTRO_ID = "maestro_id";
+
     private static final int NO_VALUE = -1;
     final int REQUEST_CODE_DATETIME = 1;
     final int REQUEST_CODE_MAESTRO = 2;
 
     private int product_id;
+    private int maestro_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +40,22 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        product_id = getIntent().getIntExtra(INTENT_EXTRA_PRODUCT_ID, NO_VALUE);
+        if (savedInstanceState != null) {
+            maestro_id = savedInstanceState.getInt(INTENT_EXTRA_MAESTRO_ID, NO_VALUE);
+            product_id = savedInstanceState.getInt(INTENT_EXTRA_PRODUCT_ID, NO_VALUE);
+        } else
+            product_id = getIntent().getIntExtra(INTENT_EXTRA_PRODUCT_ID, NO_VALUE);
 
         findViewById(R.id.livMaestro).setOnClickListener(this);
         findViewById(R.id.livProduct).setOnClickListener(this);
         findViewById(R.id.tvDate).setOnClickListener(this);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt(INTENT_EXTRA_MAESTRO_ID, maestro_id);
+        outState.putInt(INTENT_EXTRA_PRODUCT_ID, product_id);
     }
 
     @Override
@@ -56,7 +72,8 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                 //todo update date
                 break;
             case REQUEST_CODE_MAESTRO:
-                //todo update maestro
+                if (resultCode == RESULT_OK)
+                    maestro_id = data.getIntExtra(ActivityMaestro.EXTRA_INTENT_MAESTRO_ID, NO_VALUE);
                 break;
         }
     }
@@ -73,6 +90,16 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                     ImageLoader.getInstance().displayImage(product.getPhotoURI(), imgView);
                 }
                 ((TextView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.tvTitle)).setText(product.getTitle());
+            }
+        }
+        if (maestro_id != NO_VALUE) {
+            Maestro maestro = ((Controller) getApplicationContext()).controllerMaestro.getModel().getMaestroWithId(maestro_id);
+            if (maestro != null) {
+                if (!TextUtils.isEmpty(maestro.PhotoURI)) {
+                    ImageView imgView = ((ImageView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.imgView));
+                    ImageLoader.getInstance().displayImage(maestro.PhotoURI, imgView);
+                }
+                ((TextView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.tvTitle)).setText(maestro.FIO);
             }
         }
         //todo update data

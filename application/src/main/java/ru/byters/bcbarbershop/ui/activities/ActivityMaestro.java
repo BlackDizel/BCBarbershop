@@ -13,7 +13,7 @@ import ru.byters.bcbarbershop.controllers.adapters.AdapterMaestro;
 
 public class ActivityMaestro extends ActivityBase {
 
-    private static final String EXTRA_INTENT_MAESTRO_ID = "maestro_id";
+    public static final String EXTRA_INTENT_MAESTRO_ID = "maestro_id";
     private static final String EXTRA_INTENT_PRODUCT_ID = "product_id";
 
     @Override
