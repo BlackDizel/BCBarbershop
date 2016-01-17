@@ -3,12 +3,19 @@ package ru.byters.bcbarbershop.ui.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import ru.byters.bcbarbershop.R;
+import ru.byters.bcbarbershop.controllers.Controller;
+import ru.byters.bcbarbershop.dataclasses.Product;
 
 public class ActivityEnroll extends ActivityBase implements OnClickListener {
 
@@ -57,6 +64,17 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
+
+        if (product_id != NO_VALUE) {
+            Product product = ((Controller) getApplicationContext()).controllerProducts.getProducts().getProductWithId(product_id);
+            if (product != null) {
+                if (!TextUtils.isEmpty(product.getPhotoURI())) {
+                    ImageView imgView = ((ImageView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.imgView));
+                    ImageLoader.getInstance().displayImage(product.getPhotoURI(), imgView);
+                }
+                ((TextView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.tvTitle)).setText(product.getTitle());
+            }
+        }
         //todo update data
         // ((Controller) getApplicationContext()).updateEnrollView(livMaestro);
     }
