@@ -13,11 +13,12 @@ import java.io.ObjectOutputStream;
 
 public class ControllerStorage {
 
+    public static final String NEWS = "cache_news";
+    public static final String CATEGORIES = "cache_categories";
+    public static final String PRODUCTS = "cache_products";
+    public static final String BARBERSHOP = "cache_barbershop";
+    public static final String MAESTRO = "cache_maestro";
     private static final String TAG = "controllerStorage";
-    public static final String NEWS="cache_news";
-    public static final String CATEGORIES="cache_categories";
-    public static final String PRODUCTS="cache_products";
-    public static final String BARBERSHOP="cache_barbershop";
 
     public synchronized static void writeObjectToFile(Context context, Object object, String filename) {
 
