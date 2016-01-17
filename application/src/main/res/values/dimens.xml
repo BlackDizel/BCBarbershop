@@ -26,5 +26,7 @@
     <dimen name="activity_enroll_content_padding">16dp</dimen>
     <dimen name="activity_enroll_item_margin">16dp</dimen>
     <dimen name="activity_enroll_date_padding">16dp</dimen>
+    <dimen name="view_maestro_list_item_photo_margin">8dp</dimen>
+    <dimen name="view_maestro_list_item_photo_size">96dp</dimen>
 
 </resources>
