@@ -30,7 +30,7 @@ public class ControllerProductMaestro {
     public void updateData(@NonNull AzureConnect azure) {
         if (!isUpdating) {
             isUpdating = true;
-            azure.getTableTop(ModelProductsMaestro.tablename, ModelProductsMaestro.class, 500);
+            azure.getTableTop(ModelProductsMaestro.tablename, ProductMaestro.class, 500);
         }
     }
 

@@ -69,7 +69,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
 
         //enroll = new ModelEnroll();
 
-        //ModelProductsMaestro.tablename = "ProductsMaestro";
+        ModelProductsMaestro.tablename = "ProductsMaestro";
         ModelMaestro.tablename = "Maestro";
         ModelProducts.tablename = "Products";
         ModelNews.tablename = "News";

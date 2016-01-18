@@ -89,7 +89,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                     ImageView imgView = ((ImageView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.imgView));
                     ImageLoader.getInstance().displayImage(product.getPhotoURI(), imgView);
                 }
-                ((TextView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.tvTitle)).setText(product.getTitle());
+                ((TextView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.tvPrimary)).setText(product.getTitle());
             }
         }
         if (maestro_id != NO_VALUE) {
@@ -99,7 +99,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                     ImageView imgView = ((ImageView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.imgView));
                     ImageLoader.getInstance().displayImage(maestro.PhotoURI, imgView);
                 }
-                ((TextView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.tvTitle)).setText(maestro.FIO);
+                ((TextView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.tvPrimary)).setText(maestro.FIO);
             }
         }
         //todo update data
