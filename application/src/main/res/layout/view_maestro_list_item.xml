@@ -12,7 +12,8 @@
             android:id="@+id/ivPhoto"
             android:layout_width="@dimen/view_maestro_list_item_photo_size"
             android:layout_height="@dimen/view_maestro_list_item_photo_size"
-            android:layout_margin="@dimen/view_maestro_list_item_photo_margin" />
+            android:layout_margin="@dimen/view_maestro_list_item_photo_margin"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="0dp"
