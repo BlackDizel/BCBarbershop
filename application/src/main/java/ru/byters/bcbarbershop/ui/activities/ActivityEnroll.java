@@ -2,7 +2,6 @@ package ru.byters.bcbarbershop.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -43,8 +42,10 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
         if (savedInstanceState != null) {
             maestro_id = savedInstanceState.getInt(INTENT_EXTRA_MAESTRO_ID, NO_VALUE);
             product_id = savedInstanceState.getInt(INTENT_EXTRA_PRODUCT_ID, NO_VALUE);
-        } else
+        } else {
             product_id = getIntent().getIntExtra(INTENT_EXTRA_PRODUCT_ID, NO_VALUE);
+            maestro_id = NO_VALUE;
+        }
 
         findViewById(R.id.livMaestro).setOnClickListener(this);
         findViewById(R.id.livProduct).setOnClickListener(this);
@@ -52,8 +53,8 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         outState.putInt(INTENT_EXTRA_MAESTRO_ID, maestro_id);
         outState.putInt(INTENT_EXTRA_PRODUCT_ID, product_id);
     }
@@ -131,8 +132,10 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                 //      startActivityForResult(new Intent(this, ActivityDateTime.class), REQUEST_CODE_DATETIME);
                 break;
             case R.id.livMaestro:
-                //todo navigate to select maestro activity
-                //    startActivityForResult(new Intent(this, ActivityMaestro.class), REQUEST_CODE_MAESTRO);
+                Intent intent = new Intent(this, ActivityMaestro.class);
+                if (product_id != NO_VALUE)
+                    intent.putExtra(ActivityMaestro.EXTRA_INTENT_PRODUCT_ID, product_id);
+                startActivityForResult(intent, REQUEST_CODE_MAESTRO);
                 break;
         }
     }
