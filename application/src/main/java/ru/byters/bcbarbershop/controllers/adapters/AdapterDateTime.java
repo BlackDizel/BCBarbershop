@@ -12,6 +12,7 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -34,8 +35,8 @@ public class AdapterDateTime extends RecyclerView.Adapter<AdapterDateTime.ViewHo
     @Override
     public ViewHolderBase onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == HEADER)
-            return new ViewHolderHeader(LayoutInflater.from(controller).inflate(R.layout.view_calendar_list_header, parent, false));
-        return new ViewHolderItem(LayoutInflater.from(controller).inflate(R.layout.view_calendar_list_item, parent, false));
+            return new ViewHolderHeader(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_calendar_list_header, parent, false));
+        return new ViewHolderItem(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_calendar_list_item, parent, false));
     }
 
     @Override
@@ -51,7 +52,8 @@ public class AdapterDateTime extends RecyclerView.Adapter<AdapterDateTime.ViewHo
 
     @Override
     public int getItemCount() {
-        return 1;// + controller.controllerEnroll.getModel().getDayInfoWithParams(maestroId, selectedDay).getSize();
+        ArrayList<Date> list = controller.controllerEnroll.getModel().getDayInfoWithParams(maestroId, selectedDay);
+        return 1 + (list == null ? 0 : list.size());
     }
 
     public void setMaestroId(int maestroId) {
@@ -71,13 +73,16 @@ public class AdapterDateTime extends RecyclerView.Adapter<AdapterDateTime.ViewHo
 
         @Override
         public void setData(int position) {
-            if (selectedDay != null) calendarView.setSelectedDate(selectedDay);
+            if (selectedDay == null) selectedDay = Calendar.getInstance().getTime();
+            calendarView.setSelectedDate(selectedDay);
         }
 
         @Override
         public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-            selectedDay = date.getDate();
-            notifyDataSetChanged();
+            if (selectedDay != date.getDate()) {
+                selectedDay = date.getDate();
+                notifyDataSetChanged();
+            }
         }
     }
 
@@ -92,8 +97,8 @@ public class AdapterDateTime extends RecyclerView.Adapter<AdapterDateTime.ViewHo
 
         @Override
         public void setData(int position) {
-           // Date date = controller.controllerEnroll.getModel().getDayInfoWithParams(maestroId, selectedDay).get(position - 1);
-           // tvTitle.setText(new SimpleDateFormat("HH:mm").format(date));
+            Date date = controller.controllerEnroll.getModel().getDayInfoWithParams(maestroId, selectedDay).get(position - 1);
+            tvTitle.setText(new SimpleDateFormat("HH:mm").format(date));
         }
 
         @Override
