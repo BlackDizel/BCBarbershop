@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import java.util.Date;
 
 import ru.byters.bcbarbershop.R;
+import ru.byters.bcbarbershop.controllers.Controller;
+import ru.byters.bcbarbershop.controllers.adapters.AdapterDateTime;
 
 public class ActivityDateTime extends ActivityBase {
 
     public static final String EXTRA_INTENT_DATE = "intent_date";
+    public static final String EXTRA_INTENT_MAESTRO_ID = "maestro_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +31,9 @@ public class ActivityDateTime extends ActivityBase {
         RecyclerView rvCalendar = (RecyclerView) findViewById(R.id.rvTime);
         rvCalendar.setHasFixedSize(true);
         rvCalendar.setLayoutManager(new LinearLayoutManager(this));
-        //rvCalendar.setAdapter();
-
+        AdapterDateTime adapter = ((Controller) getApplicationContext()).adapterDateTime;
+        adapter.setMaestroId(getIntent().getIntExtra(EXTRA_INTENT_MAESTRO_ID, AdapterDateTime.NO_VALUE));
+        rvCalendar.setAdapter(adapter);
     }
 
     public void confirm(Date date) {
@@ -38,4 +43,12 @@ public class ActivityDateTime extends ActivityBase {
         finish();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
