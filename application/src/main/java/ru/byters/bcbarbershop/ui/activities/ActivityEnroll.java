@@ -83,12 +83,8 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                     date = (Date) data.getSerializableExtra(ActivityDateTime.EXTRA_INTENT_DATE);
                 break;
             case REQUEST_CODE_MAESTRO:
-                if (resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK)
                     maestro_id = data.getIntExtra(ActivityMaestro.EXTRA_INTENT_MAESTRO_ID, NO_VALUE);
-                    ArrayList<Date> list = ((Controller) getApplicationContext()).controllerEnroll.getModel().getDayInfoWithParams(maestro_id, Calendar.getInstance().getTime());
-                    if (list != null)
-                        date = list.get(0);
-                }
                 break;
         }
     }
@@ -97,6 +93,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
     protected void onResume() {
         super.onResume();
 
+        //region product_id
         if (product_id != NO_VALUE) {
             Product product = ((Controller) getApplicationContext()).controllerProducts.getModel().getProductWithId(product_id);
             if (product != null) {
@@ -107,6 +104,15 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                 ((TextView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.tvPrimary)).setText(product.getTitle());
             }
         }
+        //endregion
+
+        //region maestro_id
+        if (maestro_id == NO_VALUE
+                && product_id != NO_VALUE) {
+            Controller controller = (Controller) getApplicationContext();
+            ArrayList<Maestro> list = controller.controllerMaestro.getModel().getDataWithProductId(controller, product_id);
+            if (list != null) maestro_id = list.get(0).MaestroID;
+        }
         if (maestro_id != NO_VALUE) {
             Maestro maestro = ((Controller) getApplicationContext()).controllerMaestro.getModel().getMaestroWithId(maestro_id);
             if (maestro != null) {
@@ -116,14 +122,19 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                 }
                 ((TextView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.tvPrimary)).setText(maestro.FIO);
             }
-        } else {
-            //todo set first available maestro with sooner data
         }
-        if (date != null) {
+        //endregion
+
+        //region date
+        if (date == null && maestro_id != NO_VALUE) {
+            ArrayList<Date> list = ((Controller) getApplicationContext()).controllerEnroll.getModel().getDayInfoWithParams(maestro_id, Calendar.getInstance().getTime());
+            if (list != null)
+                date = list.get(0);
+        }
+        if (date != null)
             ((TextView) findViewById(R.id.tvDate)).setText(new SimpleDateFormat("HH:mm DD MMMM").format(date));
-        } else {
-            //todo set first available date
-        }
+        else ((TextView) findViewById(R.id.tvDate)).setText(getString(R.string.select_date));
+        //endregion
     }
 
     @Override

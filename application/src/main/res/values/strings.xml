@@ -22,6 +22,7 @@
     <string name="action_community">сообщество</string>
     <string name="text_no_data">Нет данных</string>
     <string name="call_to_barbershop">ЗВОНОК В САЛОН</string>
+    <string name="select_date">Выберите дату</string>
 
 
 </resources>
