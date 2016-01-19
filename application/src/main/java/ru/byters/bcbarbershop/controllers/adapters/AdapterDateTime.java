@@ -58,6 +58,7 @@ public class AdapterDateTime extends RecyclerView.Adapter<AdapterDateTime.ViewHo
 
     public void setMaestroId(int maestroId) {
         this.maestroId = maestroId;
+        selectedDay = null;
         notifyDataSetChanged();
     }
 
@@ -88,6 +89,7 @@ public class AdapterDateTime extends RecyclerView.Adapter<AdapterDateTime.ViewHo
 
     private class ViewHolderItem extends ViewHolderBase implements View.OnClickListener {
         private TextView tvTitle;
+        private Date date;
 
         public ViewHolderItem(View itemView) {
             super(itemView);
@@ -97,12 +99,22 @@ public class AdapterDateTime extends RecyclerView.Adapter<AdapterDateTime.ViewHo
 
         @Override
         public void setData(int position) {
-            Date date = controller.controllerEnroll.getModel().getDayInfoWithParams(maestroId, selectedDay).get(position - 1);
+            ArrayList<Date> list = controller.controllerEnroll.getModel().getDayInfoWithParams(maestroId, selectedDay);
+            if (list == null) return;
+            date = list.get(position - 1);
             tvTitle.setText(new SimpleDateFormat("HH:mm").format(date));
         }
 
         @Override
         public void onClick(View v) {
+            Calendar cal = Calendar.getInstance();
+            Calendar calResource = Calendar.getInstance();
+            cal.setTime(selectedDay);
+            calResource.setTime(date);
+            cal.set(Calendar.HOUR_OF_DAY, calResource.get(Calendar.HOUR_OF_DAY));
+            cal.set(Calendar.MINUTE, calResource.get(Calendar.MINUTE));
+            selectedDay = cal.getTime();
+
             if (v.getContext() instanceof ActivityDateTime)
                 ((ActivityDateTime) v.getContext()).confirm(selectedDay);
         }
