@@ -29,5 +29,6 @@
     <dimen name="view_maestro_list_item_photo_margin">8dp</dimen>
     <dimen name="view_maestro_list_item_photo_size">96dp</dimen>
     <dimen name="item_maestro_margin">16dp</dimen>
+    <dimen name="datetime_list_item_padding">16dp</dimen>
 
 </resources>

@@ -91,7 +91,7 @@ public class AdapterDateTime extends RecyclerView.Adapter<AdapterDateTime.ViewHo
 
         public ViewHolderItem(View itemView) {
             super(itemView);
-            tvTitle = (TextView) itemView;
+            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
             itemView.setOnClickListener(this);
         }
 
