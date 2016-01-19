@@ -16,6 +16,7 @@ import ru.byters.azure.AzureConnect;
 import ru.byters.azure.AzureThrowListener;
 import ru.byters.bcbarbershop.R;
 import ru.byters.bcbarbershop.controllers.adapters.AdapterCategories;
+import ru.byters.bcbarbershop.controllers.adapters.AdapterDateTime;
 import ru.byters.bcbarbershop.controllers.adapters.AdapterMaestro;
 import ru.byters.bcbarbershop.controllers.adapters.AdapterNews;
 import ru.byters.bcbarbershop.controllers.adapters.AdapterProducts;
@@ -48,6 +49,8 @@ public class Controller extends Application implements AzureThrowListener, Appli
     public AdapterNews adapterNews;
     public AdapterProducts adapterProducts;
     public AdapterCategories adapterCategories;
+    public AdapterDateTime adapterDateTime;
+
     public Activity currentActivity;
 
     AzureConnect azure;
@@ -87,6 +90,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
         adapterNews = new AdapterNews(this);
         adapterProducts = new AdapterProducts(this);
         adapterCategories = new AdapterCategories(this);
+        adapterDateTime = new AdapterDateTime(this);
 
         registerActivityLifecycleCallbacks(this);
     }
@@ -122,6 +126,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
             if (controllerBarbershopInfo.model.getData() != null)
                 adapterCategories.updateFooter(controllerBarbershopInfo.model.getData().Phone);
         }
+        //todo if datetime info get, update adapter
 
     }
 
