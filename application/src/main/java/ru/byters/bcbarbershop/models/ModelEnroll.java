@@ -39,23 +39,33 @@ public class ModelEnroll {
         savedList = new ArrayList<>();
 
         //todo debug. need to change code with real customer worklog system
-        savedList = getDebugData();
+        savedList = getDebugData(selectedDay);
 
         if (savedList.size() == 0) savedList = null;
         return savedList;
     }
 
     @NonNull
-    private ArrayList<Date> getDebugData() {
+    private ArrayList<Date> getDebugData(Date selectedDay) {
         ArrayList<Date> list = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
+        calendar.setTime(selectedDay);
+
+        Calendar today = Calendar.getInstance();
+        if (calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)
+                && calendar.get(Calendar.MONTH) == today.get(Calendar.MONTH)
+                && calendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH))
+            calendar = today;
+
+        int minHour = Math.max(10, calendar.get(Calendar.HOUR_OF_DAY));
+
         calendar.set(calendar.get(Calendar.YEAR)
                 , calendar.get(Calendar.MONTH)
                 , calendar.get(Calendar.DAY_OF_MONTH)
-                , 10
+                , minHour
                 , 0);
 
-        for (int i = 0; i < 10; ++i) {
+        for (int i = 0; i < Math.max(20 - minHour, 0); ++i) {
             Date date = calendar.getTime();
             list.add(date);
             calendar.add(Calendar.HOUR, 1);
