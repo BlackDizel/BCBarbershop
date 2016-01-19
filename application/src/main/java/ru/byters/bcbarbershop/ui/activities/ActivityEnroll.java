@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import ru.byters.bcbarbershop.R;
 import ru.byters.bcbarbershop.controllers.Controller;
 import ru.byters.bcbarbershop.dataclasses.Maestro;
@@ -22,6 +25,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
 
     public static final String INTENT_EXTRA_PRODUCT_ID = "product_id";
     private static final String INTENT_EXTRA_MAESTRO_ID = "maestro_id";
+    private static final String INTENT_EXTRA_DATE = "date";
 
     private static final int NO_VALUE = -1;
     final int REQUEST_CODE_DATETIME = 1;
@@ -29,6 +33,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
 
     private int product_id;
     private int maestro_id;
+    private Date date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
         if (savedInstanceState != null) {
             maestro_id = savedInstanceState.getInt(INTENT_EXTRA_MAESTRO_ID, NO_VALUE);
             product_id = savedInstanceState.getInt(INTENT_EXTRA_PRODUCT_ID, NO_VALUE);
+            date = (Date) savedInstanceState.getSerializable(INTENT_EXTRA_DATE);
         } else {
             product_id = getIntent().getIntExtra(INTENT_EXTRA_PRODUCT_ID, NO_VALUE);
             maestro_id = NO_VALUE;
@@ -57,6 +63,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
         super.onSaveInstanceState(outState);
         outState.putInt(INTENT_EXTRA_MAESTRO_ID, maestro_id);
         outState.putInt(INTENT_EXTRA_PRODUCT_ID, product_id);
+        outState.putSerializable(INTENT_EXTRA_DATE, date);
     }
 
     @Override
@@ -70,7 +77,8 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CODE_DATETIME:
-                //todo update date
+                if (resultCode == RESULT_OK)
+                    date = (Date) data.getSerializableExtra(ActivityDateTime.EXTRA_INTENT_DATE);
                 break;
             case REQUEST_CODE_MAESTRO:
                 if (resultCode == RESULT_OK)
@@ -102,9 +110,14 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                 }
                 ((TextView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.tvPrimary)).setText(maestro.FIO);
             }
+        } else {
+            //todo set first available maestro with sooner data
         }
-        //todo update data
-        // ((Controller) getApplicationContext()).updateEnrollView(livMaestro);
+        if (date != null) {
+            ((TextView) findViewById(R.id.tvDate)).setText(new SimpleDateFormat("HH:mm DD MMMM").format(date));
+        } else {
+            //todo set first available date
+        }
     }
 
     @Override
@@ -120,6 +133,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()) {
             case R.id.livProduct:
                 //enable if product_id is not set
@@ -128,11 +142,14 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                     ;
                 break;
             case R.id.tvDate:
-                //todo navigate to select date activity
-                //      startActivityForResult(new Intent(this, ActivityDateTime.class), REQUEST_CODE_DATETIME);
+                if (maestro_id != NO_VALUE) {
+                    intent = new Intent(this, ActivityDateTime.class);
+                    intent.putExtra(ActivityDateTime.EXTRA_INTENT_MAESTRO_ID, maestro_id);
+                    startActivityForResult(intent, REQUEST_CODE_DATETIME);
+                }
                 break;
             case R.id.livMaestro:
-                Intent intent = new Intent(this, ActivityMaestro.class);
+                intent = new Intent(this, ActivityMaestro.class);
                 if (product_id != NO_VALUE)
                     intent.putExtra(ActivityMaestro.EXTRA_INTENT_PRODUCT_ID, product_id);
                 startActivityForResult(intent, REQUEST_CODE_MAESTRO);
