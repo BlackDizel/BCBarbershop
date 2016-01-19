@@ -44,6 +44,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
     public ControllerCategories controllerCategories;
     public ControllerMaestro controllerMaestro;
     public ControllerProductMaestro controllerProductMaestro;
+    public ControllerEnroll controllerEnroll;
 
     public AdapterMaestro adapterMaestro;
     public AdapterNews adapterNews;
@@ -85,6 +86,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
         controllerCategories = new ControllerCategories(this, azure);
         controllerMaestro = new ControllerMaestro(this, azure);
         controllerProductMaestro = new ControllerProductMaestro(this, azure);
+        controllerEnroll = new ControllerEnroll(this, azure);
 
         adapterMaestro = new AdapterMaestro(this);
         adapterNews = new AdapterNews(this);
