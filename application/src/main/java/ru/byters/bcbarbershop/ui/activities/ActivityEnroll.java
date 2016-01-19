@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import ru.byters.bcbarbershop.R;
@@ -81,8 +83,12 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                     date = (Date) data.getSerializableExtra(ActivityDateTime.EXTRA_INTENT_DATE);
                 break;
             case REQUEST_CODE_MAESTRO:
-                if (resultCode == RESULT_OK)
+                if (resultCode == RESULT_OK) {
                     maestro_id = data.getIntExtra(ActivityMaestro.EXTRA_INTENT_MAESTRO_ID, NO_VALUE);
+                    ArrayList<Date> list = ((Controller) getApplicationContext()).controllerEnroll.getModel().getDayInfoWithParams(maestro_id, Calendar.getInstance().getTime());
+                    if (list != null)
+                        date = list.get(0);
+                }
                 break;
         }
     }
