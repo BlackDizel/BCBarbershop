@@ -1,15 +1,21 @@
 package ru.byters.bcbarbershop.ui.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -141,7 +147,25 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_confirm) {
-            //   ((Controller) getApplicationContext()).sendEnroll();
+            if (product_id != NO_VALUE && maestro_id != NO_VALUE && date != null) {
+
+                View alertView = getLayoutInflater().inflate(R.layout.view_enroll_alert, null);
+                String phone = ((Controller) getApplicationContext()).controllerEnroll.getModel().getPhone();
+                if (!TextUtils.isEmpty(phone))
+                    ((TextView) findViewById(R.id.etPhone)).setText(phone);
+
+                AlertDialog d = new AlertDialog.Builder(this)
+                        .setView(alertView)
+                        .setTitle(R.string.confirm_enroll)
+                        .setPositiveButton(R.string.action_enroll, null)
+                        .create();
+                d.setOnShowListener(new DialogShowListener(d, alertView));
+                d.show();
+            } else new AlertDialog.Builder(this)
+                    .setMessage(R.string.confirm_dial)
+                    .setPositiveButton(R.string.action_dial, new DialClickListener())
+                    .create()
+                    .show();
             return true;
         } else if (id == android.R.id.home)
             onBackPressed();
@@ -171,6 +195,59 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                     intent.putExtra(ActivityMaestro.EXTRA_INTENT_PRODUCT_ID, product_id);
                 startActivityForResult(intent, REQUEST_CODE_MAESTRO);
                 break;
+        }
+    }
+
+    private class DialClickListener implements DialogInterface.OnClickListener {
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            ((Controller) ActivityEnroll.this.getApplicationContext()).call(ActivityEnroll.this);
+        }
+    }
+
+    private class DialogShowListener implements DialogInterface.OnShowListener {
+
+        @NonNull
+        private AlertDialog dialog;
+        @NonNull
+        private View alertView;
+
+        public DialogShowListener(@NonNull AlertDialog d, @NonNull View alertView) {
+            this.alertView = alertView;
+            this.dialog = d;
+        }
+
+        @Override
+        public void onShow(DialogInterface dialogInterface) {
+            Button b = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            b.setOnClickListener(new EnrollClickListener(dialog, (EditText) alertView.findViewById(R.id.etPhone), (EditText) alertView.findViewById(R.id.etComment)));
+        }
+
+        private class EnrollClickListener implements View.OnClickListener {
+
+            @NonNull
+            private EditText etPhone, etComment;
+            @NonNull
+            private AlertDialog dialog;
+
+            public EnrollClickListener(@NonNull AlertDialog dialog, @NonNull EditText etPhone, @NonNull EditText etComment) {
+                this.etComment = etComment;
+                this.etPhone = etPhone;
+                this.dialog = dialog;
+            }
+
+            @Override
+            public void onClick(View view) {
+                if (!TextUtils.isEmpty(etPhone.getText())) {
+                    Controller controller = (Controller) ActivityEnroll.this.getApplicationContext();
+                    controller.controllerEnroll.getModel().setPhone(etPhone.getText().toString());
+                    controller.controllerEnroll.sendEnroll(etComment.getText().toString());
+                    dialog.dismiss();
+                    ActivityEnroll.this.onBackPressed();
+                } else
+                    Toast.makeText(ActivityEnroll.this, R.string.action_enroll_empty_phone, Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
