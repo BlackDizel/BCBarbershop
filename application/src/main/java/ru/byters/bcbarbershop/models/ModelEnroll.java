@@ -73,4 +73,13 @@ public class ModelEnroll {
 
         return list;
     }
+
+    public void setPhone(String phone) {
+        //todo implement
+    }
+
+    public String getPhone() {
+        //todo implement
+        return null;
+    }
 }
