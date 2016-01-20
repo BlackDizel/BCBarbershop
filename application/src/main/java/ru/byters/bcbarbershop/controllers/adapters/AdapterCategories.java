@@ -90,9 +90,7 @@ public class AdapterCategories extends RecyclerView.Adapter<AdapterCategories.Vi
             if (position == RecyclerView.NO_POSITION) return;
 
             if (!TextUtils.isEmpty(phone) && position == getItemCount() - 1) {
-                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
-                if (intent.resolveActivity(controller.getPackageManager()) != null)
-                    v.getContext().startActivity(intent);
+                controller.call(v.getContext());
             } else {
                 Intent i = new Intent(v.getContext(), ActivityShop.class);
                 i.putExtra(ActivityShop.INTENT_EXTRA_CATEGORY_ID, categoryID);

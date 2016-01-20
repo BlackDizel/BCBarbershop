@@ -2,8 +2,12 @@ package ru.byters.bcbarbershop.controllers;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -130,6 +134,17 @@ public class Controller extends Application implements AzureThrowListener, Appli
         }
         //todo if datetime info get, update adapter
 
+    }
+
+
+    public void call(Context context) {
+        if (controllerBarbershopInfo.model.getData() == null) return;
+        String phoneNum = controllerBarbershopInfo.model.getData().Phone;
+        if (!TextUtils.isEmpty(phoneNum)){
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNum));
+            if (intent.resolveActivity(getPackageManager()) != null)
+                context.startActivity(intent);
+        }
     }
 
     @Override
