@@ -19,6 +19,7 @@ public class ControllerStorage {
     public static final String BARBERSHOP = "cache_barbershop";
     public static final String MAESTRO = "cache_maestro";
     public static final String PRODUCTMAESTRO = "cache_productmaestro";
+    public static final String USERPHONE = "cache_userphone";
     private static final String TAG = "controllerStorage";
 
     public synchronized static void writeObjectToFile(Context context, Object object, String filename) {
