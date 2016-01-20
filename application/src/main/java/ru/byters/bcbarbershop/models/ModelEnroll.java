@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import ru.byters.bcbarbershop.controllers.ControllerStorage;
 import ru.byters.bcbarbershop.dataclasses.Enroll;
 
 public class ModelEnroll {
@@ -15,6 +16,7 @@ public class ModelEnroll {
     private Enroll enroll;
     private ArrayList<Date> savedList;
     private int savedMaestroId;
+    private String savedUserPhone;
     private Date savedDate;
 
     public ModelEnroll(Context context) {
@@ -74,12 +76,15 @@ public class ModelEnroll {
         return list;
     }
 
-    public void setPhone(String phone) {
-        //todo implement
+    public void setPhone(Context context, String phone) {
+        savedUserPhone = phone;
+        ControllerStorage.writeObjectToFile(context, savedUserPhone, ControllerStorage.USERPHONE);
     }
 
-    public String getPhone() {
-        //todo implement
-        return null;
+    @Nullable
+    public String getPhone(Context context) {
+        if (savedUserPhone == null)
+            savedUserPhone = (String) ControllerStorage.readObjectFromFile(context, ControllerStorage.USERPHONE);
+        return savedUserPhone;
     }
 }

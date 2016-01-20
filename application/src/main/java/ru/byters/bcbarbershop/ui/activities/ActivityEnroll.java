@@ -150,7 +150,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
             if (product_id != NO_VALUE && maestro_id != NO_VALUE && date != null) {
 
                 View alertView = getLayoutInflater().inflate(R.layout.view_enroll_alert, null);
-                String phone = ((Controller) getApplicationContext()).controllerEnroll.getModel().getPhone();
+                String phone = ((Controller) getApplicationContext()).controllerEnroll.getModel().getPhone(this);
                 if (!TextUtils.isEmpty(phone))
                     ((TextView) findViewById(R.id.etPhone)).setText(phone);
 
@@ -241,7 +241,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(etPhone.getText())) {
                     Controller controller = (Controller) ActivityEnroll.this.getApplicationContext();
-                    controller.controllerEnroll.getModel().setPhone(etPhone.getText().toString());
+                    controller.controllerEnroll.getModel().setPhone(controller, etPhone.getText().toString());
                     controller.controllerEnroll.sendEnroll(etComment.getText().toString());
                     dialog.dismiss();
                     ActivityEnroll.this.onBackPressed();
