@@ -23,6 +23,13 @@
     <string name="text_no_data">Нет данных</string>
     <string name="call_to_barbershop">ЗВОНОК В САЛОН</string>
     <string name="select_date">Выберите дату</string>
+    <string name="confirm_dial">Позвонить в салон красоты?</string>
+    <string name="action_dial">Позвонить</string>
+    <string name="confirm_enroll">Подтверждение записи</string>
+    <string name="action_enroll">Оформить запись</string>
+    <string name="view_enroll_alert_phone_hint">Введите ваш номер телефона</string>
+    <string name="view_entoll_alert_comment_hint">Добавьте комментарий к записи</string>
+    <string name="action_enroll_empty_phone">Не указан контактный номер телефона</string>
 
 
 </resources>
