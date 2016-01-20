@@ -24,6 +24,10 @@ public class ControllerEnroll {
         return model;
     }
 
+    public void sendEnroll(String comment) {
+        //todo implement
+    }
+
     /*
     public void updateData(@NonNull AzureConnect azure) {
         if (!isUpdating) {
