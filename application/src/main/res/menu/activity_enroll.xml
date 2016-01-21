@@ -6,7 +6,7 @@
     <!--todo add icon -->
     <item
         android:id="@+id/action_confirm"
-        android:icon="@android:drawable/ic_dialog_alert"
+        android:icon="@drawable/ic_action_accept"
         android:title="@string/action_enroll_confirm"
         app:showAsAction="always" />
 </menu>
