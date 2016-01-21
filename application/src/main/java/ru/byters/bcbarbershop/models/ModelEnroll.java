@@ -3,6 +3,7 @@ package ru.byters.bcbarbershop.models;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,7 +14,6 @@ import ru.byters.bcbarbershop.dataclasses.Enroll;
 
 public class ModelEnroll {
     public static String tablename;
-    private Enroll enroll;
     private ArrayList<Date> savedList;
     private int savedMaestroId;
     private String savedUserPhone;
@@ -87,4 +87,18 @@ public class ModelEnroll {
             savedUserPhone = (String) ControllerStorage.readObjectFromFile(context, ControllerStorage.USERPHONE);
         return savedUserPhone;
     }
+
+    @Nullable
+    public Enroll getEnroll(Context context, String comment, int product_id, int maestro_id, Date date) {
+        if (TextUtils.isEmpty(getPhone(context)))
+            return null;
+
+        Enroll enroll = new Enroll();
+        enroll.MaestroID = maestro_id;
+        enroll.EnrollDate = date;
+        enroll.Comment = String.format("%s, %s", getPhone(context), TextUtils.isEmpty(comment) ? "" : comment);
+        enroll.ProductID = product_id;
+        return enroll;
+    }
+
 }

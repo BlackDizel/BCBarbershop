@@ -2,8 +2,12 @@ package ru.byters.bcbarbershop.controllers;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import java.util.Date;
 
 import ru.byters.azure.AzureConnect;
+import ru.byters.bcbarbershop.dataclasses.Enroll;
 import ru.byters.bcbarbershop.models.ModelEnroll;
 
 public class ControllerEnroll {
@@ -24,8 +28,10 @@ public class ControllerEnroll {
         return model;
     }
 
-    public void sendEnroll(String comment) {
-        //todo implement
+    public void sendEnroll(@NonNull Context context, @NonNull AzureConnect azure, @Nullable String comment, int product_id, int maestro_id, @NonNull Date date) {
+        Enroll enroll = model.getEnroll(context, comment, product_id, maestro_id, date);
+        if (enroll == null) return;
+        azure.postTable(ModelEnroll.tablename, enroll);
     }
 
     /*

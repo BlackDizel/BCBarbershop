@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -14,6 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ru.byters.azure.AzureConnect;
@@ -33,6 +35,7 @@ import ru.byters.bcbarbershop.dataclasses.Product;
 import ru.byters.bcbarbershop.dataclasses.ProductMaestro;
 import ru.byters.bcbarbershop.models.ModelBarbershop;
 import ru.byters.bcbarbershop.models.ModelCategories;
+import ru.byters.bcbarbershop.models.ModelEnroll;
 import ru.byters.bcbarbershop.models.ModelMaestro;
 import ru.byters.bcbarbershop.models.ModelNews;
 import ru.byters.bcbarbershop.models.ModelProducts;
@@ -83,6 +86,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
         ModelNews.tablename = "News";
         ModelCategories.tablename = "Categories";
         ModelBarbershop.tablename = "Barbershops";
+        ModelEnroll.tablename = "Enroll";
 
         controllerBarbershopInfo = new ControllerBarbershop(this, azure);
         controllerNews = new ControllerNews(this, azure);
@@ -140,7 +144,7 @@ public class Controller extends Application implements AzureThrowListener, Appli
     public void call(Context context) {
         if (controllerBarbershopInfo.model.getData() == null) return;
         String phoneNum = controllerBarbershopInfo.model.getData().Phone;
-        if (!TextUtils.isEmpty(phoneNum)){
+        if (!TextUtils.isEmpty(phoneNum)) {
             Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNum));
             if (intent.resolveActivity(getPackageManager()) != null)
                 context.startActivity(intent);
@@ -158,6 +162,10 @@ public class Controller extends Application implements AzureThrowListener, Appli
 
     public void updateProducts() {
         controllerProducts.updateData(azure);
+    }
+
+    public void sendEnroll(@Nullable String comment, int product_id, int maestro_id, Date date) {
+        controllerEnroll.sendEnroll(this, azure, comment, product_id, maestro_id, date);
     }
 
     //region activity lifecycle subscription
@@ -196,34 +204,5 @@ public class Controller extends Application implements AzureThrowListener, Appli
 
     }
     //endregion
-
-/*    public void sendEnroll() {
-        azure.postTable("Enroll", enroll.getEnroll());
-    }
-
-    public Fragment InitFragmentDates() {
-        int monthnum = 3;
-        Bundle[] arrb = new Bundle[monthnum];
-        for (int i = 0; i < arrb.length; ++i) {
-            Bundle b = new Bundle();
-            b.putInt(FragmentDates.KEY, i);
-            arrb[i] = b;
-        }
-        return //new ModelSimpleString(Calendar.getInstance().getTime(),monthnum,ModelSimpleString.Type.Months).getData(),
-                //arrb,
-                new FragmentDates();
-    }
-
-    public void updateEnrollView(LabeledImageView v) {
-        Maestro m = null;
-        if (enroll != null)
-            if (maestro != null)
-                m = maestro.getItemById(enroll.getEnrollMaestro());
-        if (m != null) {
-            v.setData(null, m.FIO, "", null);
-        }
-
-    }*/
-
 
 }

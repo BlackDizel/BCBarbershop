@@ -242,7 +242,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                 if (!TextUtils.isEmpty(etPhone.getText())) {
                     Controller controller = (Controller) ActivityEnroll.this.getApplicationContext();
                     controller.controllerEnroll.getModel().setPhone(controller, etPhone.getText().toString());
-                    controller.controllerEnroll.sendEnroll(etComment.getText().toString());
+                    controller.sendEnroll(etComment.getText().toString(),product_id, maestro_id, date);
                     dialog.dismiss();
                     ActivityEnroll.this.onBackPressed();
                 } else
