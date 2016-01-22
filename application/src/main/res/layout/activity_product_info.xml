@@ -45,7 +45,6 @@
 
     <include layout="@layout/content_activity_product_info" />
 
-    <!--todo add icon -->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

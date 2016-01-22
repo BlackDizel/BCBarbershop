@@ -25,8 +25,6 @@ public class MyImageLoadingListener implements ImageLoadingListener {
 
     @Override
     public void onLoadingCancelled(String arg0, View arg1) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
@@ -42,14 +40,10 @@ public class MyImageLoadingListener implements ImageLoadingListener {
 
     @Override
     public void onLoadingFailed(String arg0, View arg1, FailReason arg2) {
-        // TODO Auto-generated method stub
-
     }
 
     @Override
     public void onLoadingStarted(String arg0, View arg1) {
-        // TODO Auto-generated method stub
-
     }
 
 
