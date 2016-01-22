@@ -40,6 +40,9 @@ public class ActivityProductInfo extends ActivityBase implements View.OnClickLis
             ImageView ivProduct = (ImageView) findViewById(R.id.ivProduct);
             if (!TextUtils.isEmpty(product.getPhotoURI()))
                 ImageLoader.getInstance().displayImage(product.getPhotoURI(), ivProduct);
+            else
+                //todo set placeholder
+                ImageLoader.getInstance().displayImage("http://lorempixel.com/g/400/400/", ivProduct);
         }
 
         findViewById(R.id.fab).setOnClickListener(this);

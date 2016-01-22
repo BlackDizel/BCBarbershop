@@ -103,12 +103,17 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
         if (product_id != NO_VALUE) {
             Product product = ((Controller) getApplicationContext()).controllerProducts.getModel().getProductWithId(product_id);
             if (product != null) {
+                ImageView imgView = ((ImageView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.imgView));
                 if (!TextUtils.isEmpty(product.getPhotoURI())) {
-                    ImageView imgView = ((ImageView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.imgView));
                     ImageLoader.getInstance().displayImage(product.getPhotoURI(), imgView);
+                } else {
+                    //todo display placeholder
+                    ImageLoader.getInstance().displayImage("http://lorempixel.com/g/400/400/", imgView);
                 }
                 ((TextView) findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.tvPrimary)).setText(product.getTitle());
             }
+            findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.imgView).setVisibility(View.VISIBLE);
+            findViewById(R.id.livProduct).findViewById(ru.byters.view.R.id.tvHugeTitle).setVisibility(View.GONE);
         }
         //endregion
 
@@ -122,12 +127,17 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
         if (maestro_id != NO_VALUE) {
             Maestro maestro = ((Controller) getApplicationContext()).controllerMaestro.getModel().getMaestroWithId(maestro_id);
             if (maestro != null) {
+                ImageView imgView = ((ImageView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.imgView));
                 if (!TextUtils.isEmpty(maestro.PhotoURI)) {
-                    ImageView imgView = ((ImageView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.imgView));
                     ImageLoader.getInstance().displayImage(maestro.PhotoURI, imgView);
+                } else {
+                    //todo display placeholder
+                    ImageLoader.getInstance().displayImage("http://lorempixel.com/g/400/400/", imgView);
                 }
                 ((TextView) findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.tvPrimary)).setText(maestro.FIO);
             }
+            findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.imgView).setVisibility(View.VISIBLE);
+            findViewById(R.id.livMaestro).findViewById(ru.byters.view.R.id.tvHugeTitle).setVisibility(View.GONE);
         }
         //endregion
 
@@ -242,7 +252,7 @@ public class ActivityEnroll extends ActivityBase implements OnClickListener {
                 if (!TextUtils.isEmpty(etPhone.getText())) {
                     Controller controller = (Controller) ActivityEnroll.this.getApplicationContext();
                     controller.controllerEnroll.getModel().setPhone(controller, etPhone.getText().toString());
-                    controller.sendEnroll(etComment.getText().toString(),product_id, maestro_id, date);
+                    controller.sendEnroll(etComment.getText().toString(), product_id, maestro_id, date);
                     dialog.dismiss();
                     ActivityEnroll.this.onBackPressed();
                 } else

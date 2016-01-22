@@ -149,6 +149,8 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
             imgView = (ImageView) v.findViewById(ru.byters.view.R.id.imgView);
             tvTitle = (TextView) v.findViewById(ru.byters.view.R.id.tvPrimary);
             v.findViewById(ru.byters.view.R.id.tvEnd).setVisibility(View.GONE);
+            imgView.setVisibility(View.VISIBLE);
+            v.findViewById(ru.byters.view.R.id.tvHugeTitle).setVisibility(View.GONE);
         }
 
         public void setData(int position) {
@@ -169,7 +171,8 @@ public class AdapterProducts extends RecyclerView.Adapter<AdapterProducts.ViewHo
             if (!TextUtils.isEmpty(item.getPhotoURI()))
                 ImageLoader.getInstance().displayImage(item.getPhotoURI(), imgView);
             else {
-                //todo setData
+                //todo set placeholder
+                ImageLoader.getInstance().displayImage("http://lorempixel.com/g/400/400/", imgView);
             }
             tvTitle.setText(item.getTitle());
 
